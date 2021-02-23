@@ -25,7 +25,7 @@ export default class AddUserComp extends Component {
         }
         console.log(newUser);
 
-        axios.post('http://localhost:8080/user/add',newUser).then(res=>console.log(res.data));
+        axios.post('http://localhost:3001/user/add',newUser).then(res=>console.log(res.data));
         
         this.setState({
             username:''

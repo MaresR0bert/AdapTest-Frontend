@@ -62,7 +62,7 @@ export default class AddQuestionComp extends Component {
 
         console.log(newQuestion);
 
-        axios.post('http://localhost:8080/question/add',newQuestion).then(res=>console.log(res.data));
+        axios.post('http://localhost:3001/question/add',newQuestion).then(res=>console.log(res.data));
 
         this.setState({
             username: '',
