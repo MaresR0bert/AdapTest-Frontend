@@ -5,17 +5,17 @@ export default class Navbar extends Component {
     render() {
         return (
             <nav className='nav navbar-light bg-light navbar-expand-lg'>
-                <Link to='/' className='navbar-brand'>AdapTest</Link>
+                <Link to='/teacher' className='navbar-brand'>AdapTest</Link>
                 <div>
                     <ul className='navbar-nav mr-auto'>
                         <li className='navbar-item'>
-                            <Link to='/user/add' className='nav-link'>Register User</Link>
+                            <Link to='/teacher/user/add' className='nav-link'>Register User</Link>
                         </li>
                         <li className='navbar-item'>
-                            <Link to='/question/add' className='nav-link'>Add Question</Link>
+                            <Link to='/teacher/question/add' className='nav-link'>Add Question</Link>
                         </li>
                         <li className='navbar-item'>
-                            <Link to='/question/' className='nav-link'>My Pool of Questions</Link>
+                            <Link to='/teacher/question/pool' className='nav-link'>My Pool of Questions</Link>
                         </li>
                     </ul>
                 </div>
