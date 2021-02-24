@@ -5,7 +5,7 @@ import Navbar from './Navbar.js'
 import AddUserComp from './AddUserComp.js'
 import AddQuestionComp from './AddQuestionComp.js'
 
-export default class MainPage extends Component {
+export default class MainPageTeacher extends Component {
     render() {
         return (
             <Router>
