@@ -15,7 +15,7 @@ export default class Navbar extends Component {
                             <Link to='/teacher/question/add' className='nav-link'>Add Question</Link>
                         </li>
                         <li className='navbar-item'>
-                            <Link to='/teacher/question/pool' className='nav-link'>My Pool of Questions</Link>
+                            <Link to='/teacher/question/pool' className='nav-link'>My Question Pool</Link>
                         </li>
                     </ul>
                 </div>
