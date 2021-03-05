@@ -78,21 +78,20 @@ export default class AddQuestionComp extends Component {
             <div className='container' >
                 <h1>Add Question:</h1>
                 <form onSubmit={this.onSubmit}>
-                    <label>Question Body: </label>
+                    <h6>Question Body: </h6>
+                    <textarea className='form-control' value={this.state.body} onChange={this.onChangeBody} />
                     <br />
-                    <textarea style={{width:500}} value={this.state.body} onChange={this.onChangeBody} />
+                    <h6>Right answer: </h6>
+                    <input className='form-control' type='text' value={this.state.answer} onChange={this.onChangeAnswer} />
                     <br />
-                    <label>Right answer: </label>
-                    <input type='text' value={this.state.answer} onChange={this.onChangeAnswer} />
+                    <h6>Wrong answers: </h6>
+                    <h6>*Separate wrong answers by ","</h6>
+                    <input className='form-control' type='text' value={this.state.fakes} onChange={this.onChangeFakes}/>
                     <br />
-                    <label>Wrong answers: </label>
-                    <input type='text' value={this.state.fakes} onChange={this.onChangeFakes}/>
-                    <label>*Separate wrong answers by ","</label>
+                    <h6>Set difficulty: </h6>
+                    <input className='form-control' type='range' min='1' max='10' step='1' style={{ verticalAlign: 'middle' }} value={this.state.difficulty} onChange={this.onChangeDifficulty}/>
                     <br />
-                    <label>Set difficulty: </label>
-                    <input type='range' min='1' max='10' step='1' style={{ verticalAlign: 'middle' }} value={this.state.difficulty} onChange={this.onChangeDifficulty}/>
-                    <br />
-                    <input type='submit' />
+                    <input className="btn btn-dark" type='submit' />
                 </form>
             </div>
         )

@@ -38,9 +38,11 @@ export default class AddUserComp extends Component {
                 <br />
                 <h1>Add User:</h1>
                 <form onSubmit={this.onSubmit}>
-                    <span>Username:</span>
-                    <input type='text' value={this.state.username} onChange={this.onChangeUsername} />
-                    <input type='submit' />
+                    <br />
+                    <h5>Username:</h5>
+                    <input className='form-control' type='text' value={this.state.username} onChange={this.onChangeUsername} />
+                    <br />
+                    <input className="btn btn-dark" type='submit' />
                 </form>
             </div>
         )
