@@ -7,9 +7,9 @@ export default class QuestionRow extends Component {
     render() {
         return (
            <tr>
-               <td>{this.props.question.body}</td>
-               <td>{this.props.question.answer}</td>
-               <td>{this.props.question.fakes}</td>
+               <td>{this.props.question.questionBody}</td>
+               <td>{this.props.question.rightAnswers}</td>
+               <td>{this.props.question.wrongAnswers}</td>
                <td>{this.props.question.difficulty}</td>
            </tr>
         )

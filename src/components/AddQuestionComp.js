@@ -12,11 +12,11 @@ export default class AddQuestionComp extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            username: '',
-            body: '',
-            answer: '',
-            fakes: '',
+            questionBody: '',
+            rightAnswers: '',
+            wrongAnswers: '',
             difficulty: 0,
+            username: ''
         }
     }
 
@@ -28,19 +28,19 @@ export default class AddQuestionComp extends Component {
 
     onChangeBody(event) {
         this.setState({
-            body: event.target.value
+            questionBody: event.target.value
         })
     }
 
     onChangeAnswer(event) {
         this.setState({
-            answer: event.target.value
+            rightAnswers: event.target.value
         })
     }
 
     onChangeFakes(event) {
         this.setState({
-            fakes: event.target.value
+            wrongAnswers: event.target.value
         })
     }
 
@@ -53,11 +53,11 @@ export default class AddQuestionComp extends Component {
     onSubmit(event) {
         event.preventDefault();
         const newQuestion = {
+            questionBody: this.state.questionBody,
+            rightAnswers: this.state.rightAnswers,
+            wrongAnswers: this.state.wrongAnswers,
+            difficulty: this.state.difficulty,
             username: this.state.username,
-            body: this.state.body,
-            answer: this.state.answer,
-            fakes: this.state.fakes,
-            difficulty: this.state.difficulty
         }
 
         console.log(newQuestion);
@@ -65,11 +65,11 @@ export default class AddQuestionComp extends Component {
         axios.post('http://localhost:3001/question/add',newQuestion).then(res=>console.log(res.data));
 
         this.setState({
-            username: '',
-            body: '',
-            answer: '',
-            fakes: '',
+            questionBody: '',
+            rightAnswers: '',
+            wrongAnswers: '',
             difficulty: 0,
+            username: ''
         })
     }
 
