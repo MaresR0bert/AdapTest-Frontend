@@ -23,30 +23,37 @@ export default class StudentTakeTest extends Component {
         return Math.floor(Math.random() * Math.floor(max));
     }
 
-    getQuestionBodyList(){
-        return this.state.questionList.map(questionElem=>{
+    getQuestionBodyList() {
+        return this.state.questionList.map(questionElem => {
             return questionElem.questionBody;
         });
     }
 
     render() {
         let currentQuestion = this.state.questionList[this.getRandomInt(this.state.questionList.length)];
-        if(currentQuestion){
+        if (currentQuestion) {
             return (
                 <div className='container'>
-                    <div>
-                        {currentQuestion.questionBody}
+                    <form className="form-check">
+                        <h2>{currentQuestion.questionBody}</h2>
+                        <label>
+                            <input type='radio' name='answers' className='form-check-input' value={currentQuestion.rightAnswers} />
+                            {currentQuestion.rightAnswers}
+                        </label>
                         <br />
-                        <input type='radio' name='answers' value={currentQuestion.rightAnswers} />
+                        <label>
+                            <input type='radio' name='answers' className='form-check-input' value={currentQuestion.wrongAnswers} />
+                            {currentQuestion.wrongAnswers}
+                        </label>
                         <br />
-                        <input type='radio' name='answers' value={currentQuestion.wrongAnswers} />
-                    </div>
+                        <input type='submit' className="btn btn-dark" />
+                    </form>
                 </div>
             )
-        }else{
-            return(
+        } else {
+            return (
                 <div>
-                    Loading
+                    Loading...
                 </div>
             )
         }
