@@ -23,17 +23,18 @@ export default class StudentTakeTest extends Component {
         return Math.floor(Math.random() * Math.floor(max));
     }
 
-    getQuestionList(){
+    getQuestionBodyList(){
         return this.state.questionList.map(questionElem=>{
             return questionElem.questionBody;
         });
     }
 
     render() {
+        let questionArray = this.getQuestionBodyList();
         return (
             <div className='container'>
                 {console.log(this.state.questionList)}
-                <div>{this.getQuestionList()}</div>
+                {questionArray[this.getRandomInt(questionArray.length)]}
             </div>
         )
     }
