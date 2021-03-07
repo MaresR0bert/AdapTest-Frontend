@@ -46,8 +46,8 @@ export default class QuestionPool extends Component {
             <div className='container'>
                 <h3>Your pool:</h3>
                 {console.log(this.state.questionList)}
-                <table className='table table-striped table-dark'>
-                    <thead>
+                <table className='table'>
+                    <thead className='thead-dark'>
                         <tr>
                             <th>Question Body</th>
                             <th>Correct Answer/Answers</th>
