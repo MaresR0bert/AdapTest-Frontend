@@ -50,10 +50,10 @@ export default class AddUserComp extends Component {
                 <form onSubmit={this.onSubmit}>
                     <br />
                     <h5>Username:</h5>
-                    <input className='form-control' type='text' value={this.state.username} onChange={this.onChangeUsername} />
+                    <input className='form-control' type='text' minLength="6" value={this.state.username} onChange={this.onChangeUsername} />
                     <br />
                     <h5>Password:</h5>
-                    <input className='form-control' type='password' value={this.state.password} onChange={this.onChangePassword} />
+                    <input className='form-control' type='password' minLength="6" value={this.state.password} onChange={this.onChangePassword} />
                     <br />
                     <input className="btn btn-dark" type='submit' />
                 </form>
