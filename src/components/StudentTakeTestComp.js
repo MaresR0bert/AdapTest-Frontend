@@ -30,12 +30,26 @@ export default class StudentTakeTest extends Component {
     }
 
     render() {
-        let questionArray = this.getQuestionBodyList();
-        return (
-            <div className='container'>
-                {console.log(this.state.questionList)}
-                {questionArray[this.getRandomInt(questionArray.length)]}
-            </div>
-        )
+        let currentQuestion = this.state.questionList[this.getRandomInt(this.state.questionList.length)];
+        if(currentQuestion){
+            return (
+                <div className='container'>
+                    <div>
+                        {currentQuestion.questionBody}
+                        <br />
+                        <input type='radio' name='answers' value={currentQuestion.rightAnswers} />
+                        <br />
+                        <input type='radio' name='answers' value={currentQuestion.wrongAnswers} />
+                    </div>
+                </div>
+            )
+        }else{
+            return(
+                <div>
+                    Loading
+                </div>
+            )
+        }
+
     }
 }
