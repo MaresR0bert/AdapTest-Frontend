@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import NavbarTeacher from './NavbarTeacherComp.js'
-import AddUserComp from './AddUserComp.js'
+import AddUserComp from '../ServiceComponents/AddUserComp.js'
 import AddQuestionComp from './AddQuestionComp.js'
 import QuestionPool from './QuestionPoolComp.js';
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import ExerciceQuestion from './ExerciceQuestionComp.js'
 
 export default class StudentTakeTest extends Component {
     constructor(props) {
@@ -34,20 +35,7 @@ export default class StudentTakeTest extends Component {
         if (currentQuestion) {
             return (
                 <div className='container'>
-                    <form className="form-check">
-                        <h2>{currentQuestion.questionBody}</h2>
-                        <label>
-                            <input type='radio' name='answers' className='form-check-input' value={currentQuestion.rightAnswers} />
-                            {currentQuestion.rightAnswers}
-                        </label>
-                        <br />
-                        <label>
-                            <input type='radio' name='answers' className='form-check-input' value={currentQuestion.wrongAnswers} />
-                            {currentQuestion.wrongAnswers}
-                        </label>
-                        <br />
-                        <input type='submit' className="btn btn-dark" />
-                    </form>
+                    <ExerciceQuestion question={currentQuestion}/>
                 </div>
             )
         } else {

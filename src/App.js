@@ -1,9 +1,9 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import LogIn from './components/LogInComp.js';
-import MainPageTeacher from './components/MainPageTeacherComp.js'
-import MainPageStudent from './components/MainPageStudentComp.js'
+import LogIn from './components/ServiceComponents/LogInComp.js';
+import MainPageTeacher from './components/TeacherComponents/MainPageTeacherComp.js'
+import MainPageStudent from './components/StudentComponents/MainPageStudentComp.js'
 
 function App() {
   return (
