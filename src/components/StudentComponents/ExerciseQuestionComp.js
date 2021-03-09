@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class ExerciceQuestion extends Component {
+export default class ExerciseQuestion extends Component {
     constructor(props) {
         super(props)
 
@@ -22,6 +22,7 @@ export default class ExerciceQuestion extends Component {
     }
 
     onSubmit(event){
+        event.preventDefault();
         console.log('submit done')
     }
 

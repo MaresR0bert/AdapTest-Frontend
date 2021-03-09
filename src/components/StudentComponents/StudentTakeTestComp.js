@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import ExerciceQuestion from './ExerciceQuestionComp.js'
+import ExerciseQuestion from './ExerciseQuestionComp.js'
 
 export default class StudentTakeTest extends Component {
     constructor(props) {
@@ -36,7 +36,7 @@ export default class StudentTakeTest extends Component {
         if (currentQuestion) {
             return (
                 <div className='container'>
-                    <ExerciceQuestion question={currentQuestion}/>
+                    <ExerciseQuestion question={currentQuestion}/>
                 </div>
             )
         } else {
