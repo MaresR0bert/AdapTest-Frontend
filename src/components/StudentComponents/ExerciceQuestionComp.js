@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 export default class ExerciceQuestion extends Component {
     constructor(props) {
         super(props)
+
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     populateRightAnswers() {
@@ -19,9 +21,13 @@ export default class ExerciceQuestion extends Component {
         })
     }
 
+    onSubmit(event){
+        console.log('submit done')
+    }
+
     render() {
         return (
-            <form>
+            <form onSubmit={this.onSubmit}>
                 <h3>{this.props.question.questionBody}</h3>
                 <div>
                     {this.populateRightAnswers()}

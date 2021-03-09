@@ -6,7 +6,8 @@ export default class StudentTakeTest extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            questionList: []
+            questionList: [],
+            score: 0
         };
     }
 
