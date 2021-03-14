@@ -7,16 +7,9 @@ export default class ExerciseQuestion extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    populateRightAnswers() {
-        let rightAnswersArray = this.props.question.rightAnswers.split(',');
-        return rightAnswersArray.map(answerElem => {
-            return <div><label><input type='radio' name='answers' className='form-check-input' value={answerElem} />{answerElem}</label><br /></div>
-        })
-    }
-
-    populateWrongAnswers() {
-        let wrongAnswersArray = this.props.question.wrongAnswers.split(',');
-        return wrongAnswersArray.map(answerElem => {
+    populateAnswers() {
+        let answerArray = this.props.question.answers.split(',');
+        return answerArray.map(answerElem => {
             return <div><label><input type='radio' name='answers' className='form-check-input' value={answerElem} />{answerElem}</label><br /></div>
         })
     }
@@ -31,10 +24,7 @@ export default class ExerciseQuestion extends Component {
             <form onSubmit={this.onSubmit}>
                 <h3>{this.props.question.questionBody}</h3>
                 <div>
-                    {this.populateRightAnswers()}
-                </div>
-                <div>
-                    {this.populateWrongAnswers()}
+                    {this.populateAnswers()}
                 </div>
                 <input type='submit' className="btn btn-dark" />
             </form>

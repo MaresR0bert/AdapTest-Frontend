@@ -15,7 +15,7 @@ export default class QuestionPool extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3001/question/').then(res => {
+        axios.get('http://localhost:3001/question/explicit').then(res => {
             //console.log(res.data);
             this.setState({
                 questionList: res.data
