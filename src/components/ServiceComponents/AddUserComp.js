@@ -6,11 +6,13 @@ export default class AddUserComp extends Component {
         super(props)
         this.state={
             username:'',
-            password:''
+            password:'',
+            role:''
         }
 
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
+        this.onChangeRole = this.onChangeRole.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
@@ -26,11 +28,18 @@ export default class AddUserComp extends Component {
         })
     }
 
+    onChangeRole(event){
+        this.setState({
+            role: event.target.value
+        })
+    }
+
     onSubmit(event) {
         event.preventDefault();
         const newUser = {
             username: this.state.username,
-            password: this.state.password
+            password: this.state.password,
+            role: this.state.role
         }
         console.log(newUser);
 
@@ -38,7 +47,8 @@ export default class AddUserComp extends Component {
         
         this.setState({
             username:'',
-            password:''
+            password:'',
+            role:''
         })
     }
 
@@ -54,6 +64,13 @@ export default class AddUserComp extends Component {
                     <br />
                     <h5>Password:</h5>
                     <input className='form-control' type='password' minLength="6" value={this.state.password} onChange={this.onChangePassword} />
+                    <br />
+                    <h5>User role:</h5>
+                    <select required className='form-control' value={this.state.role} onChange={this.onChangeRole}>
+                        <option value='none'>Choose a Role</option>
+                        <option value='teacher'>Teacher</option>
+                        <option value='student'>Student</option>
+                    </select>
                     <br />
                     <input className="btn btn-dark" type='submit' />
                 </form>
