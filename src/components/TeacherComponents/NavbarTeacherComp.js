@@ -14,6 +14,11 @@ export default class NavbarTeacher extends Component {
                         <li className='navbar-item'>
                             <Link to='/teacher/question/pool' className='nav-link'>My Question Pool</Link>
                         </li>
+                        <li className='navbar-item'>
+                            <button className='btn btn-dark' onClick={()=>{
+                                window.location='/'
+                            }}>Log out</button>
+                        </li>
                     </ul>
                 </div>
             </nav>

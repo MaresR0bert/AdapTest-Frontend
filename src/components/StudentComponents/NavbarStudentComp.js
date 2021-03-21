@@ -11,6 +11,11 @@ export default class NavbarStudent extends Component {
                         <li className='navbar-item'>
                             <Link to='/student/taketest' className='nav-link'>Take Test</Link>
                         </li>
+                        <li className='navbar-item'>
+                            <button className='btn btn-dark' onClick={()=>{
+                                window.location='/'
+                            }}>Log out</button>
+                        </li>
                     </ul>
                 </div>
             </nav>
