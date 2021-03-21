@@ -5,6 +5,11 @@ export default class ExerciseQuestion extends Component {
         super(props)
 
         this.onSubmit = this.onSubmit.bind(this);
+        this.onChangeValue = this.onChangeValue.bind(this);
+
+        this.state={
+            currentAnswerSelected:""
+        }
     }
 
     populateAnswers() {
@@ -17,13 +22,20 @@ export default class ExerciseQuestion extends Component {
     onSubmit(event){
         event.preventDefault();
         console.log('submit done')
+        console.log(this.state.currentAnswerSelected);
+    }
+
+    onChangeValue(event){
+        this.setState({
+            currentAnswerSelected: event.target.value
+        })
     }
 
     render() {
         return (
             <form onSubmit={this.onSubmit}>
                 <h3>{this.props.question.questionBody}</h3>
-                <div>
+                <div onChange={this.onChangeValue}>
                     {this.populateAnswers()}
                 </div>
                 <input type='submit' className="btn btn-dark" />

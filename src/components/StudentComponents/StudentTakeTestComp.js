@@ -7,7 +7,8 @@ export default class StudentTakeTest extends Component {
         super(props)
         this.state = {
             questionList: [],
-            score: 0
+            score: 0,
+            currentAnswerSelected:"lamyo"
         };
     }
 
@@ -36,7 +37,7 @@ export default class StudentTakeTest extends Component {
         if (currentQuestion) {
             return (
                 <div className='container'>
-                    <ExerciseQuestion question={currentQuestion}/>
+                    <ExerciseQuestion question={currentQuestion} currentAnswerSelected={this.state.currentAnswerSelected}/>
                 </div>
             )
         } else {
