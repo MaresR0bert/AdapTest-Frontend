@@ -25,8 +25,8 @@ export default class QuestionPool extends Component {
         })
     }
 
-    deleteQuestion(id) {
-        axios.delete('http://localhost:3001/question/' + id).then(res => {
+    async deleteQuestion(id) {
+        await axios.delete('http://localhost:3001/question/' + id).then(res => {
             console.log(res.data);
         });
 
@@ -37,7 +37,7 @@ export default class QuestionPool extends Component {
 
     getQuestionList(){
         return this.state.questionList.map(questionElem =>{
-            return <QuestionRow question={questionElem} />
+            return <QuestionRow question={questionElem} deleteQuestion={this.deleteQuestion} key={questionElem._id} />
         })
     }
 
@@ -49,6 +49,7 @@ export default class QuestionPool extends Component {
                 <table className='table'>
                     <thead className='thead-dark'>
                         <tr>
+                            <th>Actions</th>
                             <th>Question Body</th>
                             <th>Correct Answer/Answers</th>
                             <th>Wrong Answers</th>
