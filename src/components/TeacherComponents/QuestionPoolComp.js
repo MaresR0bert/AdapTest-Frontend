@@ -49,11 +49,12 @@ export default class QuestionPool extends Component {
                 <table className='table'>
                     <thead className='thead-dark'>
                         <tr>
-                            <th>Actions</th>
                             <th>Question Body</th>
                             <th>Correct Answer/Answers</th>
                             <th>Wrong Answers</th>
                             <th>Difficulty level (1-10)</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
