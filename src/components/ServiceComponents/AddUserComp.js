@@ -34,7 +34,7 @@ export default class AddUserComp extends Component {
         })
     }
 
-    onSubmit(event) {
+    async onSubmit(event) {
         event.preventDefault();
         const newUser = {
             username: this.state.username,
@@ -43,13 +43,14 @@ export default class AddUserComp extends Component {
         }
         console.log(newUser);
 
-        axios.post('http://localhost:3001/user/add',newUser).then(res=>console.log(res.data));
-        
+        await axios.post('http://localhost:3001/user/add',newUser).then(res=>console.log(res.data));
         this.setState({
             username:'',
             password:'',
             role:''
         })
+
+        window.location = '/';
     }
 
     render() {
@@ -66,14 +67,18 @@ export default class AddUserComp extends Component {
                     <input className='form-control' type='password' minLength="6" value={this.state.password} onChange={this.onChangePassword} />
                     <br />
                     <h5>User role:</h5>
-                    <select required className='form-control' value={this.state.role} onChange={this.onChangeRole}>
+                    <select required className='form-control' value={this.state.role} onChange={this.onChangeRole} title='Your role'>
                         <option value='none'>Choose a Role</option>
                         <option value='teacher'>Teacher</option>
                         <option value='student'>Student</option>
                     </select>
                     <br />
-                    <input className="btn btn-dark" type='submit' />
+                    <input className="btn btn-dark" type='submit' value="Register"/>
                 </form>
+                <br />
+                <button className="btn btn-dark" onClick={()=>{
+                    window.location='/'
+                }}>Back</button>
             </div>
         )
     }

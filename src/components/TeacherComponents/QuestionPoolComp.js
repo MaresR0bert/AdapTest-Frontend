@@ -14,8 +14,8 @@ export default class QuestionPool extends Component {
         };
     }
 
-    componentDidMount() {
-        axios.get('http://localhost:3001/question/explicitanswers').then(res => {
+    async componentDidMount() {
+        await axios.get('http://localhost:3001/question/explicitanswers').then(res => {
             //console.log(res.data);
             this.setState({
                 questionList: res.data

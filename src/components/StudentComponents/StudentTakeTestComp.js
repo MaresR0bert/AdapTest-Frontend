@@ -11,8 +11,8 @@ export default class StudentTakeTest extends Component {
         };
     }
 
-    componentDidMount() {
-        axios.get('http://localhost:3001/question/implicitanswers').then(res => {
+    async componentDidMount() {
+        await axios.get('http://localhost:3001/question/implicitanswers').then(res => {
             this.setState({
                 questionList: res.data
             })

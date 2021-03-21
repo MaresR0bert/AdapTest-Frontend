@@ -9,9 +9,6 @@ export default class NavbarTeacher extends Component {
                 <div>
                     <ul className='navbar-nav mr-auto'>
                         <li className='navbar-item'>
-                            <Link to='/teacher/user/add' className='nav-link'>Register User</Link>
-                        </li>
-                        <li className='navbar-item'>
                             <Link to='/teacher/question/add' className='nav-link'>Add Question</Link>
                         </li>
                         <li className='navbar-item'>

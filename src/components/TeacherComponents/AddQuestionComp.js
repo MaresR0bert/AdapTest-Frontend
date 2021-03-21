@@ -50,7 +50,7 @@ export default class AddQuestionComp extends Component {
         })
     }
 
-    onSubmit(event) {
+    async onSubmit(event) {
         event.preventDefault();
         const newQuestion = {
             questionBody: this.state.questionBody,
@@ -62,7 +62,7 @@ export default class AddQuestionComp extends Component {
 
         console.log(newQuestion);
 
-        axios.post('http://localhost:3001/question/add',newQuestion).then(res=>console.log(res.data));
+        await axios.post('http://localhost:3001/question/add',newQuestion).then(res=>console.log(res.data));
 
         this.setState({
             questionBody: '',

@@ -12,9 +12,10 @@ export default class LogIn extends Component {
     render() {
         if (this.state.status === true) window.location = '/teacher/'; 
         else if(this.state.status === false) window.location = '/student/'
+        else if(this.state.status === 'register') window.location ='/register/'
 
         return (
-            <div>
+            <div className='container'>
                 <button onClick={() => {
                     this.setState({
                         status: true
@@ -26,6 +27,12 @@ export default class LogIn extends Component {
                         status: false
                     })
                 }}>Student</button>
+                <br />
+                <button onClick={()=>{
+                    this.setState({
+                        status: 'register'
+                    })
+                }}>Register</button>
             </div>
         )
     }
