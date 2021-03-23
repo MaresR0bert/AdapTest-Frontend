@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 
 export default class ExerciseQuestion extends Component {
@@ -19,10 +20,20 @@ export default class ExerciseQuestion extends Component {
         })
     }
 
-    onSubmit(event){
+    async onSubmit(event){
         event.preventDefault();
         console.log('submit done')
-        console.log(this.state.currentAnswerSelected);
+        console.log('Selected answer: '+this.state.currentAnswerSelected);
+        console.log('Question ID: '+this.props.question._id)
+
+        const answerPackage = {
+            answer: this.state.currentAnswerSelected
+        }
+
+        await axios.post('http://localhost:3001/question/check/'+this.props.question._id,answerPackage).then(res=>{
+            console.log(res.data);
+            this.props.updateScore(res.data,this.props.question._id)
+        })
     }
 
     onChangeValue(event){

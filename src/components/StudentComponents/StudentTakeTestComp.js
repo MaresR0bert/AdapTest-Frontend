@@ -8,14 +8,18 @@ export default class StudentTakeTest extends Component {
         this.state = {
             questionList: [],
             score: 0,
-            currentAnswerSelected:""
+            currentAnswerSelected:"",
+            totalNrOfQuestions:0
         };
+
+        this.updateScore = this.updateScore.bind(this);
     }
 
     async componentDidMount() {
         await axios.get('http://localhost:3001/question/implicitanswers').then(res => {
             this.setState({
-                questionList: res.data
+                questionList: res.data,
+                totalNrOfQuestions: res.data.length
             })
         }).catch(error => {
             console.log(error);
@@ -32,18 +36,40 @@ export default class StudentTakeTest extends Component {
         });
     }
 
+    updateScore(result, id){
+        if(result === 'Correct'){
+            this.setState({
+                score: this.state.score+1,
+                questionList: this.state.questionList.filter(question => question._id !== id)
+            })
+        }else{
+            this.setState({
+                score: this.state.score,
+                questionList: this.state.questionList.filter(question => question._id !== id)
+            })
+        }
+        console.log("Current Score: "+this.state.score);
+    }
+
     render() {
+        if(!this.state.questionList.length){
+            return(
+                <div className='container'>
+                    <h2>{this.state.score}/{this.state.totalNrOfQuestions}</h2>
+                </div>
+            )
+        }
         let currentQuestion = this.state.questionList[this.getRandomInt(this.state.questionList.length)];
         if (currentQuestion) {
             return (
                 <div className='container'>
-                    <ExerciseQuestion question={currentQuestion} currentAnswerSelected={this.state.currentAnswerSelected} key={currentQuestion._id} />
+                    <ExerciseQuestion question={currentQuestion} currentAnswerSelected={this.state.currentAnswerSelected} key={currentQuestion._id} updateScore={this.updateScore} />
                 </div>
             )
         } else {
             return (
-                <div>
-                    Loading...
+                <div className='container'>
+                    <h1>Loading...</h1>
                 </div>
             )
         }
