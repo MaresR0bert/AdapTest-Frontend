@@ -14,8 +14,7 @@ export default class ExerciseQuestion extends Component {
     }
 
     populateAnswers() {
-        let answerArray = this.props.question.answers.split(',');
-        return answerArray.map(answerElem => {
+        return this.props.question.answers.map(answerElem => {
             return <div><label><input type='radio' name='answers' className='form-check-input' value={answerElem} />{answerElem}</label><br /></div>
         })
     }
@@ -27,9 +26,9 @@ export default class ExerciseQuestion extends Component {
         console.log('Question ID: '+this.props.question._id)
 
         const answerPackage = {
-            answer: this.state.currentAnswerSelected
+            answer: [this.state.currentAnswerSelected]
         }
-
+        console.log(answerPackage);
         await axios.post('http://localhost:3001/question/check/'+this.props.question._id,answerPackage).then(res=>{
             console.log(res.data);
             this.props.updateScore(res.data,this.props.question._id)

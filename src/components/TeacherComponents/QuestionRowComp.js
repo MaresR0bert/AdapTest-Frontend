@@ -9,10 +9,9 @@ export default class QuestionRow extends Component {
     render() {
         return (
             <tr>
-
                 <td>{this.props.question.questionBody}</td>
-                <td>{this.props.question.rightAnswers}</td>
-                <td>{this.props.question.wrongAnswers}</td>
+                <td>{this.props.question.rightAnswers.join(", ")}</td>
+                <td>{this.props.question.wrongAnswers.join(", ")}</td>
                 <td>{this.props.question.difficulty}</td>
                 <td>
                     <Link to={'/teacher/question/edit/'+this.props.question._id}><button className='btn btn-light'><FaEdit /></button></Link>
