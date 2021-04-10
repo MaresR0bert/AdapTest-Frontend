@@ -41,7 +41,7 @@ export default class AddUserComp extends Component {
             password: this.state.password,
             role: this.state.role
         }
-        console.log(newUser);
+        //console.log(newUser);
 
         await axios.post('http://localhost:3001/user/add',newUser).then(res=>console.log(res.data));
         this.setState({

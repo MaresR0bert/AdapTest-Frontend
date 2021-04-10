@@ -1,12 +1,42 @@
 import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from 'axios';
 
 export default class LogIn extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            status: ''
+            status: '',
+            username: '',
+            password: '',
         }
+
+        this.onChangeUsername = this.onChangeUsername.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    onChangeUsername(event) {
+        this.setState({
+            username: event.target.value
+        })
+    }
+
+    onChangePassword(event) {
+        this.setState({
+            password: event.target.value
+        })
+    }
+
+    async onSubmit(event) {
+        event.preventDefault();
+        const newUser = {
+            username: this.state.username,
+            password: this.state.password,
+        }
+        console.log(newUser);
+
+        //await axios.post()
     }
 
     render() {
@@ -34,12 +64,12 @@ export default class LogIn extends Component {
                 <br />
                 <h2>Log in</h2>
                 <br />
-                <form>
+                <form onSubmit={this.onSubmit}>
                     <h5>Username:</h5>
-                    <input type='text' className='form-control'></input>
+                    <input type='text' className='form-control' value={this.state.username} onChange={this.onChangeUsername}></input>
                     <br />
                     <h5>Password:</h5>
-                    <input type='password' className='form-control'></input>
+                    <input type='password' className='form-control' value={this.state.password} onChange={this.onChangePassword}></input>
                     <br />
                     <input type='submit' className='btn btn-dark btn-lg btn-block' value='Log in'></input>
                 </form>
