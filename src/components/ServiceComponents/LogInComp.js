@@ -36,7 +36,11 @@ export default class LogIn extends Component {
         }
         console.log(newUser);
 
-        //await axios.post()
+        await axios.post("http://localhost:3001/user/login/", newUser).then(res=>{
+            if(res.data === 'teacher') window.location='/teacher'
+            else if(res.data === 'student') window.location='/student'
+            else alert('Wrong credentials');
+        })
     }
 
     render() {
