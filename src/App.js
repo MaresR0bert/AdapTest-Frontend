@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
 import LogIn from './components/ServiceComponents/LogInComp.js';
 import MainPageTeacher from './components/TeacherComponents/MainPageTeacherComp.js'
 import MainPageStudent from './components/StudentComponents/MainPageStudentComp.js'
@@ -12,26 +12,71 @@ import AddQuestionComp from './components/TeacherComponents/AddQuestionComp.js'
 import QuestionPool from './components/TeacherComponents/QuestionPoolComp.js';
 import EditQuestionComp from './components/TeacherComponents/EditQuestionComp.js';
 
-function App() {
-  return (
-    <div>
-      <Router>
-        <Route path='/' exact component={LogIn} />
-        <Route path='/register/' exact component={AddUserComp} />
+export default class App extends Component {
+  constructor(props) {
+    super(props)
 
-        <Route path={['/teacher/','/teacher/question/add','/teacher/question/pool','/teacher/question/edit/:id']} exact component={NavbarTeacher} />
-        <Route path='/teacher/' exact component={MainPageTeacher} />
-        <Route path='/teacher/question/add' exact component={AddQuestionComp} />
-        <Route path='/teacher/question/pool' exact component={QuestionPool} />
-        <Route path='/teacher/question/edit/:id' component={EditQuestionComp} />
+    this.state = {
+      username: "default",
+      role: "default"
+    }
 
-        <Route path={['/student', '/student/taketest']} exact component={NavbarStudent} />
-        <Route path='/student/' exact component={MainPageStudent} />
-        <Route path='/student/taketest' exact component={StudentTakeTest} />
+    this.onSetUser = this.onSetUser.bind(this)
+  }
 
-      </Router>
-    </div>
-  );
+  onSetUser(user, userRole) {
+    this.setState({
+      username: user,
+      role: userRole
+    })
+  }
+
+  render() {
+    if (this.state.role === "teacher") {
+      return (
+        <div>
+          <Router>
+            <Route path={['/teacher/', '/teacher/question/add', '/teacher/question/pool', '/teacher/question/edit/:id']} exact component={NavbarTeacher} />
+            <Route path='/teacher/' exact>
+              <MainPageTeacher username={this.state.username} />
+            </Route>
+            <Route path='/teacher/question/add' exact>
+              <AddQuestionComp username={this.state.username} />
+            </Route>
+            <Route path='/teacher/question/pool' exact>
+              <QuestionPool username={this.state.username} />
+            </Route>
+            <Route path='/teacher/question/edit/:id' component={EditQuestionComp} />
+            <Redirect to='/teacher/' />
+          </Router>
+        </div>
+      );
+    } else if (this.state.role === "student") {
+      return (
+        <div>
+          <Router>
+            <Route path={['/student', '/student/taketest']} exact component={NavbarStudent} />
+            <Route path='/student/' exact>
+              <MainPageStudent username={this.state.username} />
+            </Route>
+            <Route path='/student/taketest' exact>
+              <StudentTakeTest username={this.state.username} />
+            </Route>
+            <Redirect to='/student/' />
+          </Router>
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <Router>
+            <Route path='/' exact>
+              <LogIn setUser={this.onSetUser} />
+            </Route>
+            <Route path='/register/' exact component={AddUserComp} />
+          </Router>
+        </div>
+      )
+    }
+  }
 }
-
-export default App;

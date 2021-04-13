@@ -37,32 +37,18 @@ export default class LogIn extends Component {
         console.log(newUser);
 
         await axios.post("http://localhost:3001/user/login/", newUser).then(res=>{
-            if(res.data === 'teacher') window.location='/teacher'
-            else if(res.data === 'student') window.location='/student'
-            else alert('Wrong credentials');
+            if(res.data !== 'teacher' && res.data !== 'student') alert("Wrong Credentials")
+            this.props.setUser(this.state.username, res.data)
+        }).catch(()=>{
+            alert("Wrong Credentials")
         })
     }
 
     render() {
-        if (this.state.status === true) window.location = '/teacher/';
-        else if (this.state.status === false) window.location = '/student/'
-        else if (this.state.status === 'register') window.location = '/register/'
+        if (this.state.status === true) window.location = '/register/'
 
         return (
             <div className='container'>
-                <button onClick={() => {
-                    this.setState({
-                        status: true
-                    })
-                }}>Teacher</button>
-                <br />
-                <button onClick={() => {
-                    this.setState({
-                        status: false
-                    })
-                }}>Student</button>
-                <br />
-
                 <h1 className='text-center'>Welcome to Adaptest!</h1>
                 <h1 className='text-center'>The free adaptive testing platform</h1>
                 <br />
@@ -81,7 +67,7 @@ export default class LogIn extends Component {
                 <h2>Or register right here:</h2>
                 <button className='btn btn-dark' onClick={() => {
                     this.setState({
-                        status: 'register'
+                        status: true
                     })
                 }}>Register</button>
             </div>
