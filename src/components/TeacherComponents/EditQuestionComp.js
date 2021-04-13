@@ -81,7 +81,7 @@ export default class EditQuestionComp extends Component {
             difficulty: 0,
         })
 
-        window.location = '/teacher/'
+        window.location = '/teacher/question/pool'
     }
 
     render() {
