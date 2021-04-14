@@ -24,7 +24,16 @@ export default class App extends Component {
     this.onSetUser = this.onSetUser.bind(this)
   }
 
+  componentDidMount(){
+    this.setState({
+      username: localStorage.getItem('username'),
+      role: localStorage.getItem('role')
+    })
+  }
+
   onSetUser(user, userRole) {
+    localStorage.setItem('username', user)
+    localStorage.setItem('role', userRole)
     this.setState({
       username: user,
       role: userRole

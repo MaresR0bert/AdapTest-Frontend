@@ -16,7 +16,8 @@ export default class NavbarTeacher extends Component {
                         </li>
                         <li className='navbar-item'>
                             <button className='btn btn-dark' onClick={()=>{
-                                window.location='/'
+                                window.location='/';
+                                localStorage.clear()
                             }}>Log out</button>
                         </li>
                     </ul>
