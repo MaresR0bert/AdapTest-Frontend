@@ -8,22 +8,26 @@ export default class StudentTakeTest extends Component {
         this.state = {
             questionList: [],
             score: 0,
-            currentAnswerSelected:"",
-            totalNrOfQuestions:0
+            currentAnswerSelected: "",
+            totalNrOfQuestions: 0,
+            roomCode: "",
+            joined: false
         };
 
         this.updateScore = this.updateScore.bind(this);
+        this.onChangeRoomCode = this.onChangeRoomCode.bind(this);
+        this.onJoinSubmit = this.onJoinSubmit.bind(this);
     }
 
     async componentDidMount() {
-        await axios.get('http://localhost:3001/question/implicitanswers').then(res => {
-            this.setState({
-                questionList: res.data,
-                totalNrOfQuestions: res.data.length
-            })
-        }).catch(error => {
-            console.log(error);
-        })
+        // await axios.get('http://localhost:3001/question/implicitanswers').then(res => {
+        //     this.setState({
+        //         questionList: res.data,
+        //         totalNrOfQuestions: res.data.length
+        //     })
+        // }).catch(error => {
+        //     console.log(error);
+        // })
     }
 
     getRandomInt(max) {
@@ -36,43 +40,82 @@ export default class StudentTakeTest extends Component {
         });
     }
 
-    updateScore(result, id){
-        if(result === 'Correct'){
+    onChangeRoomCode(event) {
+        this.setState({
+            roomCode: event.target.value
+        })
+    }
+
+    async onJoinSubmit(event){
+        event.preventDefault();
+        await axios.get('http://localhost:3001/question/implicitanswersofuser/'+this.state.roomCode).then(res =>{
+            if(!res.data.length){
+                alert("Invalid Room Code!");
+                window.location = '/student/'
+            }
+
             this.setState({
-                score: this.state.score+1,
+                questionList: res.data,
+                totalNrOfQuestions: res.data.length,
+                joined: true
+            });
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    updateScore(result, id) {
+        if (result === 'Correct') {
+            this.setState({
+                score: this.state.score + 1,
                 questionList: this.state.questionList.filter(question => question._id !== id)
             })
-        }else{
+        } else {
             this.setState({
                 score: this.state.score,
                 questionList: this.state.questionList.filter(question => question._id !== id)
             })
         }
-        console.log("Current Score: "+this.state.score);
+        console.log("Current Score: " + this.state.score);
     }
 
     render() {
-        if(!this.state.questionList.length){
-            return(
-                <div className='container'>
-                    <h2>{this.state.score}/{this.state.totalNrOfQuestions}</h2>
-                </div>
-            )
-        }
-        let currentQuestion = this.state.questionList[this.getRandomInt(this.state.questionList.length)];
-        if (currentQuestion) {
+        if (!this.state.joined) {
             return (
                 <div className='container'>
-                    <ExerciseQuestion question={currentQuestion} currentAnswerSelected={this.state.currentAnswerSelected} key={currentQuestion._id} updateScore={this.updateScore} />
+                    <form onSubmit={this.onJoinSubmit}>
+                        <h2>Input Test Code</h2>
+                        <br />
+                        <h5>code: </h5>
+                        <input type="text" value={this.state.roomCode} onChange={this.onChangeRoomCode} />
+                        <br/>
+                        <br/>
+                        <input className="btn btn-dark" type='submit' value="Join"/>
+                    </form>
                 </div>
             )
         } else {
-            return (
-                <div className='container'>
-                    <h1>Loading...</h1>
-                </div>
-            )
+            if (!this.state.questionList.length) {
+                return (
+                    <div className='container'>
+                        <h2>{this.state.score}/{this.state.totalNrOfQuestions}</h2>
+                    </div>
+                )
+            }
+            let currentQuestion = this.state.questionList[this.getRandomInt(this.state.questionList.length)];
+            if (currentQuestion) {
+                return (
+                    <div className='container'>
+                        <ExerciseQuestion question={currentQuestion} currentAnswerSelected={this.state.currentAnswerSelected} key={currentQuestion._id} updateScore={this.updateScore} />
+                    </div>
+                )
+            } else {
+                return (
+                    <div className='container'>
+                        <h1>Loading...</h1>
+                    </div>
+                )
+            }
         }
-
     }
 }
