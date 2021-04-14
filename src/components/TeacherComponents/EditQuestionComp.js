@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router';
 
 export default class EditQuestionComp extends Component {
     constructor(props) {
@@ -16,12 +17,13 @@ export default class EditQuestionComp extends Component {
             rightAnswers: [],
             wrongAnswers: [],
             difficulty: 0,
-            username: ''
+            username: '',
+            done: false
         }
     }
 
     async componentDidMount() {
-        await axios.get('http://localhost:3001/question/'+this.props.match.params.id).then(response => {
+        await axios.get('http://localhost:3001/question/' + this.props.match.params.id).then(response => {
             this.setState({
                 questionBody: response.data.questionBody,
                 rightAnswers: response.data.rightAnswers,
@@ -29,7 +31,7 @@ export default class EditQuestionComp extends Component {
                 difficulty: response.data.difficulty,
                 username: response.data.username
             })
-        }).catch(error =>{
+        }).catch(error => {
             console.log(error)
         })
     }
@@ -72,39 +74,44 @@ export default class EditQuestionComp extends Component {
 
         console.log(newQuestion);
 
-        await axios.put('http://localhost:3001/question/update/'+this.props.match.params.id,newQuestion).then(res=>console.log(res.data));
+        await axios.put('http://localhost:3001/question/update/' + this.props.match.params.id, newQuestion).then(res => console.log(res.data));
 
         this.setState({
             questionBody: '',
             rightAnswers: [],
             wrongAnswers: [],
             difficulty: 0,
+            done: true
         })
-
-        window.location = '/teacher/question/pool'
     }
 
     render() {
-        return (
-            <div className='container' >
-                <h1>Edit Question:</h1>
-                <form onSubmit={this.onSubmit}>
-                    <h6>Question Body: </h6>
-                    <textarea className='form-control' minLength='6' maxLength='512' value={this.state.questionBody} onChange={this.onChangeBody} />
-                    <br />
-                    <h6>Right answer: </h6>
-                    <input className='form-control' type='text' minLength='1' maxLength='128' value={this.state.rightAnswers} onChange={this.onChangeRightAnswer} />
-                    <br />
-                    <h6>Wrong answers: </h6>
-                    <h6>*Separate wrong answers by ","</h6>
-                    <input className='form-control' type='text' minLength='1' maxLength='512' value={this.state.wrongAnswers} onChange={this.onChangeWrongAnswers}/>
-                    <br />
-                    <h6>Set difficulty: </h6>
-                    <input className='form-control' type='range' min='1' max='10' step='1' value={this.state.difficulty} onChange={this.onChangeDifficulty}/>
-                    <br />
-                    <input className="btn btn-dark" type='submit' />
-                </form>
-            </div>
-        )
+        if (this.state.done) {
+            return (
+                <Redirect to='/teacher' />
+            )
+        } else {
+            return (
+                <div className='container' >
+                    <h1>Edit Question:</h1>
+                    <form onSubmit={this.onSubmit}>
+                        <h6>Question Body: </h6>
+                        <textarea className='form-control' minLength='6' maxLength='512' value={this.state.questionBody} onChange={this.onChangeBody} />
+                        <br />
+                        <h6>Right answer: </h6>
+                        <input className='form-control' type='text' minLength='1' maxLength='128' value={this.state.rightAnswers} onChange={this.onChangeRightAnswer} />
+                        <br />
+                        <h6>Wrong answers: </h6>
+                        <h6>*Separate wrong answers by ","</h6>
+                        <input className='form-control' type='text' minLength='1' maxLength='512' value={this.state.wrongAnswers} onChange={this.onChangeWrongAnswers} />
+                        <br />
+                        <h6>Set difficulty: </h6>
+                        <input className='form-control' type='range' min='1' max='10' step='1' value={this.state.difficulty} onChange={this.onChangeDifficulty} />
+                        <br />
+                        <input className="btn btn-dark" type='submit' />
+                    </form>
+                </div>
+            )
+        }
     }
 }
