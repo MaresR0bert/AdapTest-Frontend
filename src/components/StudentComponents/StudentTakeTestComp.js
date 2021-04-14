@@ -19,17 +19,6 @@ export default class StudentTakeTest extends Component {
         this.onJoinSubmit = this.onJoinSubmit.bind(this);
     }
 
-    async componentDidMount() {
-        // await axios.get('http://localhost:3001/question/implicitanswers').then(res => {
-        //     this.setState({
-        //         questionList: res.data,
-        //         totalNrOfQuestions: res.data.length
-        //     })
-        // }).catch(error => {
-        //     console.log(error);
-        // })
-    }
-
     getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
     }
