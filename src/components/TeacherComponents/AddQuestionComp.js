@@ -77,7 +77,6 @@ export default class AddQuestionComp extends Component {
     render() {
         return (
             <div className='container' >
-                {this.props.username}
                 <h1>Add Question:</h1>
                 <form onSubmit={this.onSubmit}>
                     <h6>Question Body: </h6>

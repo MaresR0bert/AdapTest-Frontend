@@ -88,7 +88,7 @@ export default class EditQuestionComp extends Component {
     render() {
         if (this.state.done) {
             return (
-                <Redirect to='/teacher' />
+                <Redirect to='/teacher/question/pool' />
             )
         } else {
             return (

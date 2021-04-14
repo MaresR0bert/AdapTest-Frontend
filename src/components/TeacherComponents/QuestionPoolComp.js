@@ -14,7 +14,7 @@ export default class QuestionPool extends Component {
     }
 
     async componentDidMount() {
-        await axios.get('http://localhost:3001/question/explicitanswers').then(res => {
+        await axios.get('http://localhost:3001/question/explicitanswersofuser/'+this.props.username).then(res => {
             this.setState({
                 questionList: res.data
             })
@@ -42,7 +42,6 @@ export default class QuestionPool extends Component {
     render() {
         return (
             <div className='container'>
-                {this.props.username}
                 <h3>Your pool:</h3>
                 {console.log(this.state.questionList)}
                 <table className='table'>
