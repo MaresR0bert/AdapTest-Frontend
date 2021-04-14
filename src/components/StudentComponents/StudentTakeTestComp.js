@@ -51,9 +51,20 @@ export default class StudentTakeTest extends Component {
         }).catch(error => {
             console.log(error);
         })
+        
+        const newTempLog = {
+            username: this.props.username,
+            questionArray: [],
+            answers: [],
+            score: 0
+        }
+
+        await axios.post('http://localhost:3001/templog/add',newTempLog).then(res =>{
+            console.log(res.data);
+        })
     }
 
-    updateScore(result, id) {
+    async updateScore(result, id) {
         if (result === 'Correct') {
             this.setState({
                 score: this.state.score + 1,
@@ -66,6 +77,13 @@ export default class StudentTakeTest extends Component {
             })
         }
         console.log("Current Score: " + this.state.score);
+        const updatedTempLog = {
+            username: this.props.username,
+            questionArray: this.state.questionList,
+            answers: [],
+            score: this.state.score
+        }
+        //await axios.put('http://localhost:3001/templog/')
     }
 
     render() {
