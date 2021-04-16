@@ -45,7 +45,9 @@ export default class App extends Component {
       return (
         <div>
           <Router>
-            <Route path={['/teacher/', '/teacher/question/add', '/teacher/question/pool', '/teacher/question/edit/:id']} exact component={NavbarTeacher} />
+            <Route path={['/teacher/', '/teacher/question/add', '/teacher/question/pool', '/teacher/question/edit/:id']} exact>
+              <NavbarTeacher username = {this.state.username}/>
+            </Route>
             <Route path='/teacher/' exact>
               <MainPageTeacher username={this.state.username} />
             </Route>
@@ -64,7 +66,9 @@ export default class App extends Component {
       return (
         <div>
           <Router>
-            <Route path={['/student', '/student/taketest']} exact component={NavbarStudent} />
+            <Route path={['/student', '/student/taketest']} exact>
+              <NavbarStudent username={this.state.username}/>
+            </Route>
             <Route path='/student/' exact>
               <MainPageStudent username={this.state.username} />
             </Route>

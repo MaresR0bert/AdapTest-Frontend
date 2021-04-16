@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 export default class AddUserComp extends Component {
     constructor(props){
@@ -64,6 +65,8 @@ export default class AddUserComp extends Component {
                     <br />
                     <h5>Password:</h5>
                     <input className='form-control' type='password' minLength="6" value={this.state.password} onChange={this.onChangePassword} />
+                    <br />
+                    <PasswordStrengthBar password = {this.state.password}/>
                     <br />
                     <h5>User role:</h5>
                     <select required className='form-control' value={this.state.role} onChange={this.onChangeRole} title='Your role'>
