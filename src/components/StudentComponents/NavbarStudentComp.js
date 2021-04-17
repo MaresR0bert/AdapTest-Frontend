@@ -19,6 +19,9 @@ export default class NavbarStudent extends Component {
                             <Link to='/student/' className='nav-link'>You are {this.props.username}</Link>
                         </li>
                         <li className='navbar-item'>
+                            <Link to='/student/' className='nav-link'>Your id: {this.props._id}</Link>
+                        </li>
+                        <li className='navbar-item'>
                             <button className='btn btn-dark' onClick={() => {
                                 window.location = '/'
                                 localStorage.clear()

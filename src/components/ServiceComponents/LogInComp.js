@@ -37,10 +37,10 @@ export default class LogIn extends Component {
         console.log(newUser);
 
         await axios.post("http://localhost:3001/user/login/", newUser).then(res=>{
-            if(res.data !== 'teacher' && res.data !== 'student') alert("Wrong Credentials")
-            this.props.setUser(this.state.username, res.data)
+            if(res.data.role !== 'teacher' && res.data.role !== 'student') alert("Wrong Credentials")
+            else this.props.setUser(this.state.username, res.data.role, res.data._id)
         }).catch(()=>{
-            alert("Wrong Credentials")
+            alert("Wrong Credentials2")
         })
     }
 

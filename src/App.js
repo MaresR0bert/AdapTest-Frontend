@@ -18,25 +18,29 @@ export default class App extends Component {
 
     this.state = {
       username: "default",
-      role: "default"
+      role: "default",
+      _id: "default"
     }
 
     this.onSetUser = this.onSetUser.bind(this)
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.setState({
       username: localStorage.getItem('username'),
-      role: localStorage.getItem('role')
+      role: localStorage.getItem('role'),
+      _id: localStorage.getItem('_id')
     })
   }
 
-  onSetUser(user, userRole) {
+  onSetUser(user, userRole, id) {
     localStorage.setItem('username', user)
     localStorage.setItem('role', userRole)
+    localStorage.setItem('_id', id)
     this.setState({
       username: user,
-      role: userRole
+      role: userRole,
+      _id: id
     })
   }
 
@@ -46,7 +50,7 @@ export default class App extends Component {
         <div>
           <Router>
             <Route path={['/teacher/', '/teacher/question/add', '/teacher/question/pool', '/teacher/question/edit/:id']} exact>
-              <NavbarTeacher username = {this.state.username}/>
+              <NavbarTeacher username={this.state.username} _id={this.state._id} />
             </Route>
             <Route path='/teacher/' exact>
               <MainPageTeacher username={this.state.username} />
@@ -67,7 +71,7 @@ export default class App extends Component {
         <div>
           <Router>
             <Route path={['/student', '/student/taketest']} exact>
-              <NavbarStudent username={this.state.username}/>
+              <NavbarStudent username={this.state.username} _id={this.state._id} />
             </Route>
             <Route path='/student/' exact>
               <MainPageStudent username={this.state.username} />

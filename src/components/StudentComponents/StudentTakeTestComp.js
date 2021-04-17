@@ -35,10 +35,10 @@ export default class StudentTakeTest extends Component {
         })
     }
 
-    async onJoinSubmit(event){
+    async onJoinSubmit(event) {
         event.preventDefault();
-        await axios.get('http://localhost:3001/question/implicitanswersofuser/'+this.state.roomCode).then(res =>{
-            if(!res.data.length){
+        await axios.get('http://localhost:3001/question/implicitanswersofuser/' + this.state.roomCode).then(res => {
+            if (!res.data.length) {
                 alert("Invalid Room Code!");
                 window.location = '/student/'
             }
@@ -51,39 +51,42 @@ export default class StudentTakeTest extends Component {
         }).catch(error => {
             console.log(error);
         })
-        
+
         const newTempLog = {
             username: this.props.username,
-            questionArray: [],
+            questionArray: this.state.questionList.map(question => question._id),
             answers: [],
             score: 0
         }
 
-        await axios.post('http://localhost:3001/templog/add',newTempLog).then(res =>{
+        await axios.post('http://localhost:3001/templog/add', newTempLog).then(res => {
             console.log(res.data);
         })
     }
 
     async updateScore(result, id) {
-        if (result === 'Correct') {
-            this.setState({
-                score: this.state.score + 1,
-                questionList: this.state.questionList.filter(question => question._id !== id)
-            })
-        } else {
-            this.setState({
-                score: this.state.score,
-                questionList: this.state.questionList.filter(question => question._id !== id)
-            })
-        }
+        this.setState({
+            score: this.state.score + (result === 'Correct' ? 1 : 0),
+            questionList: this.state.questionList.filter(question => question._id !== id)
+        })
+
         console.log("Current Score: " + this.state.score);
+
         const updatedTempLog = {
-            username: this.props.username,
-            questionArray: this.state.questionList,
+            questionArray: this.state.questionList.map(question => question._id),
             answers: [],
             score: this.state.score
         }
-        //await axios.put('http://localhost:3001/templog/')
+
+        if (this.state.questionList.length) {
+            await axios.put('http://localhost:3001/templog/updatebyname/' + this.props.username, updatedTempLog).then(res => {
+                console.log(res.data);
+            })
+        } else {
+            await axios.delete('http://localhost:3001/templog/deletebyname/' + this.props.username).then(res => {
+                console.log(res.data);
+            })
+        }
     }
 
     render() {
@@ -95,9 +98,9 @@ export default class StudentTakeTest extends Component {
                         <br />
                         <h5>code: </h5>
                         <input className='form-control' type="text" value={this.state.roomCode} onChange={this.onChangeRoomCode} />
-                        <br/>
-                        <br/>
-                        <input className="btn btn-dark" type='submit' value="Join"/>
+                        <br />
+                        <br />
+                        <input className="btn btn-dark" type='submit' value="Join" />
                     </form>
                 </div>
             )
