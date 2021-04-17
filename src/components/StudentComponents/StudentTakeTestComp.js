@@ -11,7 +11,9 @@ export default class StudentTakeTest extends Component {
             currentAnswerSelected: "",
             totalNrOfQuestions: 0,
             roomCode: "",
-            joined: false
+            joined: false,
+            questionListDone: [],
+            givenAnswers: []
         };
 
         this.updateScore = this.updateScore.bind(this);
@@ -54,7 +56,9 @@ export default class StudentTakeTest extends Component {
 
         const newTempLog = {
             username: this.props.username,
-            questionArray: this.state.questionList.map(question => question._id),
+            roomCode: this.state.roomCode,
+            questionArrayRemaining: this.state.questionList.map(question => question._id),
+            questionArrayDone: [],
             answers: [],
             score: 0
         }
@@ -64,17 +68,20 @@ export default class StudentTakeTest extends Component {
         })
     }
 
-    async updateScore(result, id) {
+    async updateScore(result, id, answerGiven) {
         this.setState({
             score: this.state.score + (result === 'Correct' ? 1 : 0),
-            questionList: this.state.questionList.filter(question => question._id !== id)
+            questionList: this.state.questionList.filter(question => question._id !== id),
+            questionListDone: this.state.questionListDone.concat([id]),
+            givenAnswers: this.state.givenAnswers.concat([answerGiven])
         })
 
         console.log("Current Score: " + this.state.score);
 
         const updatedTempLog = {
-            questionArray: this.state.questionList.map(question => question._id),
-            answers: [],
+            questionArrayRemaining: this.state.questionList.map(question => question._id),
+            questionArrayDone: this.state.questionListDone,
+            givenAnswers: this.state.givenAnswers,
             score: this.state.score
         }
 
