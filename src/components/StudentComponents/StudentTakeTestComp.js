@@ -94,7 +94,7 @@ export default class StudentTakeTest extends Component {
                         <h2>Input Test Code</h2>
                         <br />
                         <h5>code: </h5>
-                        <input type="text" value={this.state.roomCode} onChange={this.onChangeRoomCode} />
+                        <input className='form-control' type="text" value={this.state.roomCode} onChange={this.onChangeRoomCode} />
                         <br/>
                         <br/>
                         <input className="btn btn-dark" type='submit' value="Join"/>
