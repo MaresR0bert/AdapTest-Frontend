@@ -8,10 +8,9 @@ export default class StudentTakeTest extends Component {
         this.state = {
             questionList: [],
             score: 0,
-            currentAnswerSelected: "",
             totalNrOfQuestions: 0,
             roomCode: "",
-            joined: false,
+            joined: 0,
             questionListDone: [],
             givenAnswers: []
         };
@@ -19,6 +18,40 @@ export default class StudentTakeTest extends Component {
         this.updateScore = this.updateScore.bind(this);
         this.onChangeRoomCode = this.onChangeRoomCode.bind(this);
         this.onJoinSubmit = this.onJoinSubmit.bind(this);
+    }
+
+    async componentDidMount() {
+        await axios.get("http://localhost:3001/templog/getbyname/" + this.props.username).then(res => {
+            if (res.data) {
+                console.log("first")
+                console.log(res.data)
+                this.setState({
+                    questionList: res.data.questionArrayRemaining,
+                    joined: 0,
+                    score: res.data.score,
+                    totalNrOfQuestions: res.data.questionArrayDone.length + res.data.questionArrayRemaining.length,
+                    roomCode: res.data.roomCode,
+                    questionArrayDone: res.data.questionArrayDone,
+                    givenAnswers: res.data.givenAnswers
+                })
+            }
+        })
+
+        if (this.state.questionList.length) {
+            alert('You were reconnected to your test')
+            const questionIdsToSend = {
+                ids: this.state.questionList
+            }
+
+            await axios.post("http://localhost:3001/question/getbymanyids/", questionIdsToSend).then(result => {
+                if (result.data.length) {
+                    this.setState({
+                        questionList: result.data,
+                        joined: 1
+                    })
+                }
+            })
+        }
     }
 
     getRandomInt(max) {
@@ -38,34 +71,38 @@ export default class StudentTakeTest extends Component {
     }
 
     async onJoinSubmit(event) {
+        let isRoomCodeCorrect = true;
         event.preventDefault();
         await axios.get('http://localhost:3001/question/implicitanswersofuser/' + this.state.roomCode).then(res => {
             if (!res.data.length) {
                 alert("Invalid Room Code!");
                 window.location = '/student/'
+                isRoomCodeCorrect = false
             }
 
             this.setState({
                 questionList: res.data,
                 totalNrOfQuestions: res.data.length,
-                joined: true
+                joined: 1
             });
         }).catch(error => {
             console.log(error);
         })
 
-        const newTempLog = {
-            username: this.props.username,
-            roomCode: this.state.roomCode,
-            questionArrayRemaining: this.state.questionList.map(question => question._id),
-            questionArrayDone: [],
-            answers: [],
-            score: 0
-        }
+        if (isRoomCodeCorrect) {
+            const newTempLog = {
+                username: this.props.username,
+                roomCode: this.state.roomCode,
+                questionArrayRemaining: this.state.questionList.map(question => question._id),
+                questionArrayDone: [],
+                answers: [],
+                score: 0
+            }
 
-        await axios.post('http://localhost:3001/templog/add', newTempLog).then(res => {
-            console.log(res.data);
-        })
+            await axios.post('http://localhost:3001/templog/add', newTempLog).then(res => {
+                console.log(res.data);
+            })
+        }
     }
 
     async updateScore(result, id, answerGiven) {
@@ -90,6 +127,10 @@ export default class StudentTakeTest extends Component {
                 console.log(res.data);
             })
         } else {
+            console.log("nothing more called")
+            this.setState({
+                joined: 2
+            })
             await axios.delete('http://localhost:3001/templog/deletebyname/' + this.props.username).then(res => {
                 console.log(res.data);
             })
@@ -112,7 +153,7 @@ export default class StudentTakeTest extends Component {
                 </div>
             )
         } else {
-            if (!this.state.questionList.length) {
+            if (this.state.joined === 2) {
                 return (
                     <div className='container'>
                         <h2>{this.state.score}/{this.state.totalNrOfQuestions}</h2>
@@ -120,10 +161,10 @@ export default class StudentTakeTest extends Component {
                 )
             }
             let currentQuestion = this.state.questionList[this.getRandomInt(this.state.questionList.length)];
-            if (currentQuestion) {
+            if (currentQuestion && this.state.joined === 1) {
                 return (
                     <div className='container'>
-                        <ExerciseQuestion question={currentQuestion} currentAnswerSelected={this.state.currentAnswerSelected} key={currentQuestion._id} updateScore={this.updateScore} />
+                        <ExerciseQuestion question={currentQuestion} key={currentQuestion._id} updateScore={this.updateScore} />
                     </div>
                 )
             } else {
