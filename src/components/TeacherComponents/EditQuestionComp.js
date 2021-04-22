@@ -23,7 +23,7 @@ export default class EditQuestionComp extends Component {
     }
 
     async componentDidMount() {
-        await axios.get('http://localhost:3001/question/' + this.props.match.params.id).then(response => {
+        await axios.get('http://localhost:3001/question/getbyid/' + this.props.match.params.id).then(response => {
             this.setState({
                 questionBody: response.data.questionBody,
                 rightAnswers: response.data.rightAnswers,
