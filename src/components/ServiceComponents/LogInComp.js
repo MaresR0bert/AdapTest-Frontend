@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from 'axios';
+import {RiUserAddLine} from 'react-icons/ri';
+import {IoEnterOutline} from 'react-icons/io5'
 
 export default class LogIn extends Component {
     constructor(props) {
@@ -52,7 +54,7 @@ export default class LogIn extends Component {
                 <h1 className='text-center'>Welcome to Adaptest!</h1>
                 <h1 className='text-center'>The free adaptive testing platform</h1>
                 <br />
-                <h2>Log in</h2>
+                <h2>Log in <IoEnterOutline /></h2>
                 <br />
                 <form onSubmit={this.onSubmit}>
                     <h5>Username:</h5>
@@ -61,7 +63,7 @@ export default class LogIn extends Component {
                     <h5>Password:</h5>
                     <input type='password' className='form-control' value={this.state.password} onChange={this.onChangePassword}></input>
                     <br />
-                    <input type='submit' className='btn btn-dark btn-lg btn-block' value='Log in'></input>
+                    <input type='submit' className='btn btn-dark btn-lg btn-block' value='Log in' />
                 </form>
                 <br />
                 <h2>Or register right here:</h2>
@@ -69,7 +71,7 @@ export default class LogIn extends Component {
                     this.setState({
                         status: true
                     })
-                }}>Register</button>
+                }}><RiUserAddLine /> Register</button>
             </div>
         )
     }

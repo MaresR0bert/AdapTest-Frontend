@@ -157,7 +157,10 @@ export default class StudentTakeTest extends Component {
             if (this.state.joined === 2) {
                 return (
                     <div className='container'>
-                        <h2>{this.state.score}/{this.state.totalNrOfQuestions}</h2>
+                        <h2>You scored {this.state.score} out of {this.state.totalNrOfQuestions}, which is equivalent to {this.state.score/this.state.totalNrOfQuestions * 100}%</h2>
+                        <button className="btn btn-dark" onClick={()=>{
+                            window.location = '/student'
+                        }}>Back</button>
                     </div>
                 )
             }
@@ -166,6 +169,7 @@ export default class StudentTakeTest extends Component {
                 return (
                     <div className='container'>
                         <ExerciseQuestion question={currentQuestion} key={currentQuestion._id} updateScore={this.updateScore} />
+                        <h4>Question {this.state.questionListDone.length + 1} out of {this.state.totalNrOfQuestions} </h4>
                     </div>
                 )
             } else {

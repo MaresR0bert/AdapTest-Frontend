@@ -1,31 +1,30 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {FaArtstation, FaPenAlt, FaUserAstronaut} from 'react-icons/fa';
+import {AiOutlineDisconnect} from 'react-icons/ai';
 
 export default class NavbarStudent extends Component {
     render() {
         return (
             <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
-                <Link to='/student' className='navbar-brand'>AdapTest</Link>
+                <Link to='/student' className='navbar-brand'><FaArtstation /> AdapTest</Link>
                 <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                     <ul className='navbar-nav mr-auto'>
                         <li className='navbar-item'>
-                            <Link to='/student/taketest' className='nav-link'>Take Test</Link>
+                            <Link to='/student/taketest' className='nav-link'>Take Test <FaPenAlt /></Link>
                         </li>
                     </ul>
                 </div>
                 <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
                     <ul className="navbar-nav ml-auto">
                         <li className='navbar-item'>
-                            <Link to='/student/' className='nav-link'>You are {this.props.username}</Link>
-                        </li>
-                        <li className='navbar-item'>
-                            <Link to='/student/' className='nav-link'>Your id: {this.props._id}</Link>
+                            <Link to='/student/' className='nav-link'> <FaUserAstronaut /> {this.props.username}</Link>
                         </li>
                         <li className='navbar-item'>
                             <button className='btn btn-dark' onClick={() => {
                                 window.location = '/'
                                 localStorage.clear()
-                            }}>Log out</button>
+                            }}><AiOutlineDisconnect /> Log out</button>
                         </li>
                     </ul>
                 </div>

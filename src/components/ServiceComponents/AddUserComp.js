@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PasswordStrengthBar from 'react-password-strength-bar';
+import {FaBackspace} from 'react-icons/fa';
+import {RiUserAddLine} from 'react-icons/ri';
+
 
 export default class AddUserComp extends Component {
     constructor(props){
@@ -75,12 +78,12 @@ export default class AddUserComp extends Component {
                         <option value='student'>Student</option>
                     </select>
                     <br />
-                    <input className="btn btn-dark" type='submit' value="Register"/>
+                    <input className="btn btn-dark" type='submit' value="Register" />
                 </form>
                 <br />
                 <button className="btn btn-dark" onClick={()=>{
                     window.location='/'
-                }}>Back</button>
+                }}><FaBackspace /> Back</button>
             </div>
         )
     }
