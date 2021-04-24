@@ -31,11 +31,12 @@ export default class StudentTakeTest extends Component {
                     score: res.data.score,
                     totalNrOfQuestions: res.data.questionArrayDone.length + res.data.questionArrayRemaining.length,
                     roomCode: res.data.roomCode,
-                    questionArrayDone: res.data.questionArrayDone,
+                    questionListDone: res.data.questionArrayDone,
                     givenAnswers: res.data.givenAnswers
                 })
             }
         })
+
 
         if (this.state.questionList.length) {
             alert('You were reconnected to your test')
