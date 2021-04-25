@@ -58,10 +58,10 @@ export default class LogIn extends Component {
                 <br />
                 <form onSubmit={this.onSubmit}>
                     <h5>Username:</h5>
-                    <input type='text' className='form-control' value={this.state.username} onChange={this.onChangeUsername}></input>
+                    <input type='text' placeholder='Username' className='form-control' value={this.state.username} onChange={this.onChangeUsername}></input>
                     <br />
                     <h5>Password:</h5>
-                    <input type='password' className='form-control' value={this.state.password} onChange={this.onChangePassword}></input>
+                    <input type='password' placeholder='Password' className='form-control' value={this.state.password} onChange={this.onChangePassword}></input>
                     <br />
                     <input type='submit' className='btn btn-dark btn-lg btn-block' value='Log in' />
                 </form>

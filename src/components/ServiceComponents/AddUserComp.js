@@ -64,10 +64,10 @@ export default class AddUserComp extends Component {
                 <form onSubmit={this.onSubmit}>
                     <br />
                     <h5>Username:</h5>
-                    <input className='form-control' type='text' minLength="6" value={this.state.username} onChange={this.onChangeUsername} />
+                    <input className='form-control' placeholder='Username' type='text' minLength="6" value={this.state.username} onChange={this.onChangeUsername} />
                     <br />
                     <h5>Password:</h5>
-                    <input className='form-control' type='password' minLength="6" value={this.state.password} onChange={this.onChangePassword} />
+                    <input className='form-control' placeholder='Password' type='password' minLength="8" value={this.state.password} onChange={this.onChangePassword} />
                     <br />
                     <PasswordStrengthBar password = {this.state.password}/>
                     <br />
