@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios'
-import ExerciseQuestion from './ExerciseQuestionComp.js'
-import {IoArrowBack} from 'react-icons/io5'
+import axios from 'axios';
+import ExerciseQuestion from './ExerciseQuestionComp.js';
+import {IoArrowBack} from 'react-icons/io5';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 export default class StudentTakeTest extends Component {
     constructor(props) {
@@ -180,6 +181,7 @@ export default class StudentTakeTest extends Component {
                         <div className='container'>
                             <ExerciseQuestion question={currentQuestion} key={currentQuestion._id} questionCounter={this.state.questionListDone.length + 1} updateScore={this.updateScore} />
                             <h4 className='text-right'>Question {this.state.questionListDone.length + 1} out of {this.state.totalNrOfQuestions} </h4>
+                            <ProgressBar animated now={this.state.questionListDone.length/this.state.totalNrOfQuestions*100} label={this.state.questionListDone.length/this.state.totalNrOfQuestions*100 + "%"} />
                         </div>
                     </div>
                 )
