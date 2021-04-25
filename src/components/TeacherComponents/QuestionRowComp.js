@@ -6,30 +6,31 @@ import RichTextEditor from 'react-rte';
 export default class QuestionRow extends Component {
     constructor(props) {
         super(props)
+
+        this.populateAnswers = this.populateAnswers.bind(this);
     }
+
+    populateAnswers(array){
+        return array.map(answerElem =>{
+            return <li>{answerElem}</li>
+        })
+    }
+
     render() {
-        let tempRightAnswers = "<ul>"
-        for(let i of this.props.question.rightAnswers){
-            tempRightAnswers +="<li>" + i + "</li>"
-        }
-        tempRightAnswers+="</ul>"
-
-        let tempWrongAnswers = "<ul>"
-        for(let i of this.props.question.wrongAnswers){
-            tempWrongAnswers +="<li>" + i + "</li>"
-        }
-        tempWrongAnswers+="</ul>"
-
         return (
             <tr>
-                <td style={{maxWidth:550}}>
+                <td style={{maxWidth:400}}>
                     <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody,'html')} />
                 </td>
                 <td>
-                    <RichTextEditor readOnly value={RichTextEditor.createValueFromString(tempRightAnswers,'html')} />
+                    <ul>
+                        {this.populateAnswers(this.props.question.rightAnswers)}
+                    </ul>
                 </td>
                 <td>
-                    <RichTextEditor readOnly value={RichTextEditor.createValueFromString(tempWrongAnswers,'html')} />
+                    <ul>
+                        {this.populateAnswers(this.props.question.wrongAnswers)}
+                    </ul>
                 </td>
                 <td>{this.props.question.difficulty}</td>
                 <td>
