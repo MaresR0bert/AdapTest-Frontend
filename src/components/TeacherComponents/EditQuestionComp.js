@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router';
+import RichTextEditor from 'react-rte';
 
 export default class EditQuestionComp extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ export default class EditQuestionComp extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            questionBody: '',
+            questionBody: RichTextEditor.createEmptyValue(),
             rightAnswers: [],
             wrongAnswers: [],
             difficulty: 0,
@@ -25,7 +26,7 @@ export default class EditQuestionComp extends Component {
     async componentDidMount() {
         await axios.get('http://localhost:3001/question/getbyid/' + this.props.match.params.id).then(response => {
             this.setState({
-                questionBody: response.data.questionBody,
+                questionBody: RichTextEditor.createValueFromString(response.data.questionBody,'html'),
                 rightAnswers: response.data.rightAnswers,
                 wrongAnswers: response.data.wrongAnswers,
                 difficulty: response.data.difficulty,
@@ -38,7 +39,7 @@ export default class EditQuestionComp extends Component {
 
     onChangeBody(event) {
         this.setState({
-            questionBody: event.target.value
+            questionBody: event
         })
     }
 
@@ -65,7 +66,7 @@ export default class EditQuestionComp extends Component {
     async onSubmit(event) {
         event.preventDefault();
         const newQuestion = {
-            questionBody: this.state.questionBody,
+            questionBody: this.state.questionBody.toString('html'),
             rightAnswers: this.state.rightAnswers,
             wrongAnswers: this.state.wrongAnswers,
             difficulty: this.state.difficulty,
@@ -77,10 +78,6 @@ export default class EditQuestionComp extends Component {
         await axios.put('http://localhost:3001/question/update/' + this.props.match.params.id, newQuestion).then(res => console.log(res.data));
 
         this.setState({
-            questionBody: '',
-            rightAnswers: [],
-            wrongAnswers: [],
-            difficulty: 0,
             done: true
         })
     }
@@ -96,7 +93,7 @@ export default class EditQuestionComp extends Component {
                     <h1>Edit Question:</h1>
                     <form onSubmit={this.onSubmit}>
                         <h6>Question Body: </h6>
-                        <textarea className='form-control' minLength='6' maxLength='512' value={this.state.questionBody} onChange={this.onChangeBody} />
+                        <RichTextEditor value={this.state.questionBody} onChange={this.onChangeBody} />
                         <br />
                         <h6>Right answer: </h6>
                         <input className='form-control' type='text' minLength='1' maxLength='128' value={this.state.rightAnswers} onChange={this.onChangeRightAnswer} />

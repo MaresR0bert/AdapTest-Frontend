@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import RichTextEditor from 'react-rte';
 
 export default class AddQuestionComp extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ export default class AddQuestionComp extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            questionBody: '',
+            questionBody: RichTextEditor.createEmptyValue(),
             rightAnswers: [],
             wrongAnswers: [],
             difficulty: 0,
@@ -28,7 +29,7 @@ export default class AddQuestionComp extends Component {
 
     onChangeBody(event) {
         this.setState({
-            questionBody: event.target.value
+            questionBody: event
         })
     }
 
@@ -55,7 +56,7 @@ export default class AddQuestionComp extends Component {
     async onSubmit(event) {
         event.preventDefault();
         const newQuestion = {
-            questionBody: this.state.questionBody,
+            questionBody: this.state.questionBody.toString('html'),
             rightAnswers: this.state.rightAnswers,
             wrongAnswers: this.state.wrongAnswers,
             difficulty: this.state.difficulty,
@@ -67,7 +68,7 @@ export default class AddQuestionComp extends Component {
         await axios.post('http://localhost:3001/question/add',newQuestion).then(res=>console.log(res.data));
 
         this.setState({
-            questionBody: '',
+            questionBody: RichTextEditor.createEmptyValue(),
             rightAnswers: [],
             wrongAnswers: [],
             difficulty: 0,
@@ -80,7 +81,7 @@ export default class AddQuestionComp extends Component {
                 <h1>Add Question:</h1>
                 <form onSubmit={this.onSubmit}>
                     <h6>Question Body: </h6>
-                    <textarea className='form-control' minLength='6' maxLength='512' value={this.state.questionBody} onChange={this.onChangeBody} />
+                    <RichTextEditor value={this.state.questionBody} onChange={this.onChangeBody} />
                     <br />
                     <h6>Right answer: </h6>
                     <input className='form-control' type='text' minLength='1' maxLength='128' value={this.state.rightAnswers} onChange={this.onChangeRightAnswer} />

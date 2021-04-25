@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import RichTextEditor from 'react-rte';
 
 export default class ExerciseQuestion extends Component {
     constructor(props) {
@@ -7,7 +8,6 @@ export default class ExerciseQuestion extends Component {
 
         this.onSubmit = this.onSubmit.bind(this);
         this.onChangeValue = this.onChangeValue.bind(this);
-        //this.toggleCheckBox = this.toggleCheckBox.bind(this);
         this.onChangeMultipleAnswers = this.onChangeMultipleAnswers.bind(this);
 
         this.state = {
@@ -81,8 +81,8 @@ export default class ExerciseQuestion extends Component {
         if (!this.props.question.isMultiAnswer) {
             return (
                 <form onSubmit={this.onSubmit}>
-                    <div className="jumbotron">
-                        <h3>{this.props.questionCounter}. {this.props.question.questionBody}</h3>
+                    <div className="container">
+                        <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
                         <br />
                         <div onChange={this.onChangeValue}>
                             {this.populateAnswers()}
@@ -96,8 +96,8 @@ export default class ExerciseQuestion extends Component {
         } else {
             return (
                 <form onSubmit={this.onSubmit}>
-                    <div className="jumbotron">
-                        <h3>{this.props.questionCounter}. {this.props.question.questionBody}</h3>
+                    <div className="container">
+                        <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
                         <br />
                         <div onChange={this.onChangeMultipleAnswers}>
                             {this.populateMultiAnswers()}

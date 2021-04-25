@@ -179,9 +179,7 @@ export default class StudentTakeTest extends Component {
                 return (
                     <div className="container">
                         <div className='jumbotron'>
-                            <h4 className='text-right'>Question {this.state.questionListDone.length + 1} out of {this.state.totalNrOfQuestions} </h4>
-                            <h6>Progress: </h6>
-                            <ProgressBar animated now={this.state.questionListDone.length/this.state.totalNrOfQuestions*100} label={this.state.questionListDone.length/this.state.totalNrOfQuestions*100 + "%"} />
+                            <h4 className='align-baseline'>Question {this.state.questionListDone.length + 1} out of {this.state.totalNrOfQuestions} </h4>
                             <ExerciseQuestion question={currentQuestion} key={currentQuestion._id} questionCounter={this.state.questionListDone.length + 1} updateScore={this.updateScore} />
                         </div>
                     </div>
