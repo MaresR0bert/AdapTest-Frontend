@@ -22,8 +22,8 @@ export default class ExerciseQuestion extends Component {
         })
     }
 
-    populateMultiAnswers(){
-        return this.props.question.answers.map(answerElem =>{
+    populateMultiAnswers() {
+        return this.props.question.answers.map(answerElem => {
             return <div><label><input type='checkbox' name='answers' className='form-check-input' value={answerElem} />{answerElem}</label></div>
         })
     }
@@ -35,7 +35,7 @@ export default class ExerciseQuestion extends Component {
         console.log('Question ID: ' + this.props.question._id)
 
         let answerPackage;
-        if(this.props.question.isMultiAnswer){
+        if (this.props.question.isMultiAnswer) {
             answerPackage = {
                 answer: this.state.currentSelectedCheckboxes
             }
@@ -60,9 +60,9 @@ export default class ExerciseQuestion extends Component {
 
     onChangeMultipleAnswers(event) {
         let tempIndex = this.state.currentSelectedCheckboxes.indexOf(event.target.value);
-        if(tempIndex !== -1){
+        if (tempIndex !== -1) {
             let tempArray = this.state.currentSelectedCheckboxes;
-            tempArray.splice(tempIndex,1);
+            tempArray.splice(tempIndex, 1);
             console.log(tempArray);
             this.setState({
                 currentSelectedCheckboxes: tempArray
@@ -77,46 +77,35 @@ export default class ExerciseQuestion extends Component {
         }
     }
 
-    // toggleCheckBox(label){
-    //     let n = this.state.currentSelectedCheckboxes.indexOf(label)
-    //     console.log(n)
-    //     if(n !== -1){
-    //         const index = this.state.currentSelectedCheckboxes.indexOf(label);
-    //         const tempArray = this.state.currentSelectedCheckboxes.splice(index,1);
-    //         console.log(tempArray)
-    //         this.setState({
-    //             currentSelectedCheckboxes: tempArray
-    //         })
-    //     } else {
-    //         let tempArray = this.state.currentSelectedCheckboxes
-    //         tempArray.push(label)
-    //         console.log(tempArray)
-    //         this.setState({
-    //             currentSelectedCheckboxes: tempArray
-    //         })
-    //     }
-    //     console.log(this.state.currentSelectedCheckboxes) 
-    // }
-
     render() {
         if (!this.props.question.isMultiAnswer) {
             return (
                 <form onSubmit={this.onSubmit}>
-                    <h3>{this.props.question.questionBody}</h3>
-                    <div onChange={this.onChangeValue}>
-                        {this.populateAnswers()}
+                    <div className="jumbotron">
+                        <h3>{this.props.questionCounter}. {this.props.question.questionBody}</h3>
+                        <br />
+                        <div onChange={this.onChangeValue}>
+                            {this.populateAnswers()}
+                        </div>
+                        <div className='text-right'>
+                            <input type='submit' className="btn btn-dark" />
+                        </div>
                     </div>
-                    <input type='submit' className="btn btn-dark" />
                 </form>
             )
         } else {
-            return(
+            return (
                 <form onSubmit={this.onSubmit}>
-                    <h3>{this.props.question.questionBody}</h3>
-                    <div onChange={this.onChangeMultipleAnswers}>
-                        {this.populateMultiAnswers()}
+                    <div className="jumbotron">
+                        <h3>{this.props.questionCounter}. {this.props.question.questionBody}</h3>
+                        <br />
+                        <div onChange={this.onChangeMultipleAnswers}>
+                            {this.populateMultiAnswers()}
+                        </div>
+                        <div className='text-right'>
+                            <input type='submit' className='btn btn-dark' />
+                        </div>
                     </div>
-                    <input type='submit' className='btn btn-dark' />
                 </form>
             )
         }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import ExerciseQuestion from './ExerciseQuestionComp.js'
+import {IoArrowBack} from 'react-icons/io5'
 
 export default class StudentTakeTest extends Component {
     constructor(props) {
@@ -142,34 +143,44 @@ export default class StudentTakeTest extends Component {
         if (!this.state.joined) {
             return (
                 <div className='container'>
-                    <form onSubmit={this.onJoinSubmit}>
-                        <h2>Input Test Code</h2>
-                        <br />
-                        <h5>code: </h5>
-                        <input className='form-control' type="text" value={this.state.roomCode} onChange={this.onChangeRoomCode} />
-                        <br />
-                        <br />
-                        <input className="btn btn-dark" type='submit' value="Join" />
-                    </form>
+                    <div className='jumbotron'>
+                        <form onSubmit={this.onJoinSubmit}>
+                            <h2 className='text-center'>Input Test Code</h2>
+                            <br />
+                            <h5>code: </h5>
+                            <input className='form-control' type="text" value={this.state.roomCode} onChange={this.onChangeRoomCode} />
+                            <br />
+                            <br />
+                            <input className="btn btn-dark btn-lg btn-block" type='submit' value="Join" />
+                        </form>
+                    </div>
                 </div>
             )
         } else {
             if (this.state.joined === 2) {
                 return (
                     <div className='container'>
-                        <h2>You scored {this.state.score} out of {this.state.totalNrOfQuestions}, which is equivalent to {this.state.score/this.state.totalNrOfQuestions * 100}%</h2>
-                        <button className="btn btn-dark" onClick={()=>{
-                            window.location = '/student'
-                        }}>Back</button>
+                        <div className='jumbotron'>
+                            <div className='jumbotron'>
+                                <h2 className='text-center'>You scored {this.state.score} out of {this.state.totalNrOfQuestions}, which is equivalent to {this.state.score / this.state.totalNrOfQuestions * 100}%</h2>
+                            </div>
+                            <div className='col text-center'>
+                                <button className="btn btn-dark" onClick={() => {
+                                    window.location = '/student'
+                                }}><IoArrowBack /> Back</button>
+                            </div>
+                        </div>
                     </div>
                 )
             }
             let currentQuestion = this.state.questionList[this.getRandomInt(this.state.questionList.length)];
             if (currentQuestion && this.state.joined === 1) {
                 return (
-                    <div className='container'>
-                        <ExerciseQuestion question={currentQuestion} key={currentQuestion._id} updateScore={this.updateScore} />
-                        <h4>Question {this.state.questionListDone.length + 1} out of {this.state.totalNrOfQuestions} </h4>
+                    <div className="container">
+                        <div className='container'>
+                            <ExerciseQuestion question={currentQuestion} key={currentQuestion._id} questionCounter={this.state.questionListDone.length + 1} updateScore={this.updateScore} />
+                            <h4 className='text-right'>Question {this.state.questionListDone.length + 1} out of {this.state.totalNrOfQuestions} </h4>
+                        </div>
                     </div>
                 )
             } else {
