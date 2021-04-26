@@ -180,6 +180,7 @@ export default class StudentTakeTest extends Component {
                     <div className="container">
                         <div className='jumbotron'>
                             <h4 className='align-baseline'>Question {this.state.questionListDone.length + 1} out of {this.state.totalNrOfQuestions} </h4>
+                            <br />
                             <ExerciseQuestion question={currentQuestion} key={currentQuestion._id} questionCounter={this.state.questionListDone.length + 1} updateScore={this.updateScore} />
                         </div>
                     </div>

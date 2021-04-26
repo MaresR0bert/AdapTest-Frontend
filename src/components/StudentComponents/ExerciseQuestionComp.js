@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import RichTextEditor from 'react-rte';
+import RenderAsImage from 'react-render-as-image'
 
 export default class ExerciseQuestion extends Component {
     constructor(props) {
@@ -82,9 +83,12 @@ export default class ExerciseQuestion extends Component {
             return (
                 <form onSubmit={this.onSubmit}>
                     <div className="container">
-                        <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
-                        <br />
-                        <div onChange={this.onChangeValue}>
+                        <div style={{ border: "2px solid black" }}>
+                            <RenderAsImage>
+                                <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
+                            </RenderAsImage>
+                        </div>
+                        <div onChange={this.onChangeValue} className='jumbotron'>
                             {this.populateAnswers()}
                         </div>
                         <div className='text-right'>
@@ -97,9 +101,12 @@ export default class ExerciseQuestion extends Component {
             return (
                 <form onSubmit={this.onSubmit}>
                     <div className="container">
-                        <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
-                        <br />
-                        <div onChange={this.onChangeMultipleAnswers}>
+                        <div style={{ border: "2px solid black" }}>
+                            <RenderAsImage>
+                                <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
+                            </RenderAsImage>
+                        </div>
+                        <div onChange={this.onChangeMultipleAnswers} className='jumbotron'>
                             {this.populateMultiAnswers()}
                         </div>
                         <div className='text-right'>
