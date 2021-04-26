@@ -130,10 +130,25 @@ export default class StudentTakeTest extends Component {
                 console.log(res.data);
             })
         } else {
-            console.log("nothing more called")
+            console.log("nothing more called");
+
+            const testLog = {
+                "student":this.props.username,
+                "roomCode":this.state.roomCode,
+                "questionArray":this.state.questionListDone,
+                "givenAnswers":this.state.givenAnswers,
+                "score": this.state.score,
+                "teacher":"placeholder"
+            }
+
+            await axios.post('http://localhost:3001/testlog/add/', testLog).then(res => {
+                console.log(res.data);
+            })
+
             this.setState({
                 joined: 2
             })
+            
             await axios.delete('http://localhost:3001/templog/deletebyname/' + this.props.username).then(res => {
                 console.log(res.data);
             })
