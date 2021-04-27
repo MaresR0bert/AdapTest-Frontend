@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import {FaArtstation, FaPenAlt, FaUserAstronaut} from 'react-icons/fa';
+import {FaArtstation, FaPenAlt, FaUserAstronaut, FaBook} from 'react-icons/fa';
 import {AiOutlineDisconnect} from 'react-icons/ai';
 
 export default class NavbarStudent extends Component {
@@ -12,6 +12,9 @@ export default class NavbarStudent extends Component {
                     <ul className='navbar-nav mr-auto'>
                         <li className='navbar-item'>
                             <Link to='/student/taketest' className='nav-link'>Take Test <FaPenAlt /></Link>
+                        </li>
+                        <li className='navbar-item'>
+                            <Link to='/student/testhistory' className='nav-link'>Test History <FaBook /></Link>
                         </li>
                     </ul>
                 </div>

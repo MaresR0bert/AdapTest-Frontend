@@ -11,6 +11,7 @@ import StudentTakeTest from './components/StudentComponents/StudentTakeTestComp.
 import AddQuestionComp from './components/TeacherComponents/AddQuestionComp.js'
 import QuestionPool from './components/TeacherComponents/QuestionPoolComp.js';
 import EditQuestionComp from './components/TeacherComponents/EditQuestionComp.js';
+import TestHistory from './components/StudentComponents/TestHistoryComp.js';
 
 export default class App extends Component {
   constructor(props) {
@@ -70,7 +71,7 @@ export default class App extends Component {
       return (
         <div>
           <Router>
-            <Route path={['/student', '/student/taketest']} exact>
+            <Route path={['/student', '/student/taketest','/student/testhistory']} exact>
               <NavbarStudent username={this.state.username} _id={this.state._id} />
             </Route>
             <Route path='/student/' exact>
@@ -78,6 +79,9 @@ export default class App extends Component {
             </Route>
             <Route path='/student/taketest' exact>
               <StudentTakeTest username={this.state.username} />
+            </Route>
+            <Route path='/student/testhistory' exact>
+              <TestHistory username={this.state.username} />
             </Route>
             <Redirect to='/student/' />
           </Router>
