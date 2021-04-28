@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {FaArtstation, FaListAlt, FaUserTie} from 'react-icons/fa';
 import {IoMdAddCircle} from 'react-icons/io';
-import {AiOutlineDisconnect} from 'react-icons/ai'
+import {AiOutlineDisconnect} from 'react-icons/ai';
+import {CgFileAdd} from 'react-icons/cg'
 
 export default class NavbarTeacher extends Component {
     render() {
@@ -17,6 +18,9 @@ export default class NavbarTeacher extends Component {
                             </li>
                             <li className='navbar-item'>
                                 <Link to='/teacher/question/pool' className='nav-link'>My Question Pool <FaListAlt /></Link>
+                            </li>
+                            <li className='navbar-item'>
+                                <Link to='/teacher/createtest/' className='nav-link'>Create Test <CgFileAdd /></Link>
                             </li>
                         </ul>
                     </div>
