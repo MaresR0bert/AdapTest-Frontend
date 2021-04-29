@@ -13,6 +13,7 @@ import QuestionPool from './components/TeacherComponents/QuestionPoolComp.js';
 import EditQuestionComp from './components/TeacherComponents/EditQuestionComp.js';
 import TestHistory from './components/StudentComponents/TestHistoryComp.js';
 import CreateTest from './components/TeacherComponents/CreateTestComp.js';
+import TestList from './components/TeacherComponents/TestListComp.js';
 
 export default class App extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ export default class App extends Component {
       return (
         <div>
           <Router>
-            <Route path={['/teacher/', '/teacher/question/add', '/teacher/question/pool', '/teacher/question/edit/:id','/teacher/createtest/']} exact>
+            <Route path={['/teacher/', '/teacher/question/add', '/teacher/question/pool', '/teacher/question/edit/:id','/teacher/createtest/','/teacher/testlist/']} exact>
               <NavbarTeacher username={this.state.username} _id={this.state._id} />
             </Route>
             <Route path='/teacher/' exact>
@@ -67,6 +68,9 @@ export default class App extends Component {
               <QuestionPool username={this.state.username} />
             </Route>
             <Route path='/teacher/question/edit/:id' component={EditQuestionComp} />
+            <Route path='/teacher/testlist/' exact>
+              <TestList username={this.state.username} />
+            </Route>
             <Redirect to='/teacher/' />
           </Router>
         </div>

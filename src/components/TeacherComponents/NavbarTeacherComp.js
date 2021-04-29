@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import {FaArtstation, FaListAlt, FaUserTie} from 'react-icons/fa';
 import {IoMdAddCircle} from 'react-icons/io';
 import {AiOutlineDisconnect} from 'react-icons/ai';
-import {CgFileAdd} from 'react-icons/cg'
+import {CgFileAdd} from 'react-icons/cg';
+import {HiClipboardList} from 'react-icons/hi'
 
 export default class NavbarTeacher extends Component {
     render() {
@@ -21,6 +22,9 @@ export default class NavbarTeacher extends Component {
                             </li>
                             <li className='navbar-item'>
                                 <Link to='/teacher/createtest/' className='nav-link'>Create Test <CgFileAdd /></Link>
+                            </li>
+                            <li className='navbar-item'>
+                                <Link to='/teacher/testlist/' className='nav-link'>Test List <HiClipboardList /></Link>
                             </li>
                         </ul>
                     </div>
