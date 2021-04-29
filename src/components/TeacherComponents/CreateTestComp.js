@@ -60,13 +60,18 @@ export default class CreateTest extends Component {
         })
     }
 
-    sumbitTestCreation(){
+    async sumbitTestCreation(){
         const newTest = {
             roomCode: this.state.roomCode,
+            questionArray: this.state.addedQuestionList.map(question => question._id),
             teacher: this.props.username,
-            testQuestions: this.state.addedQuestionList.map(question => question._id)
         }
         console.log(newTest);
+
+        await axios.post('http://localhost:3001/test/add/',newTest).then(res => {
+            console.log(res.data);
+        })
+
         window.location = '/teacher/'
     }
 
