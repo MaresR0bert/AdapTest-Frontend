@@ -17,6 +17,7 @@ export default class CreateTest extends Component {
         this.removeQuestionFromTest = this.removeQuestionFromTest.bind(this);
         this.sumbitTestCreation = this.sumbitTestCreation.bind(this);
         this.onChangeRoomCode = this.onChangeRoomCode.bind(this);
+        this.addAllQuestions = this.addAllQuestions.bind(this);
     }
 
     async componentDidMount() {
@@ -35,6 +36,17 @@ export default class CreateTest extends Component {
         this.setState({
             addedQuestionList: tempAddedQuestionList,
             questionList: this.state.questionList.filter(question => question._id !== id)
+        })
+    }
+
+    addAllQuestions(){
+        let tempAddedQuestionListAll = this.state.addedQuestionList;
+        for(let item of this.state.questionList){
+            tempAddedQuestionListAll.push(item);
+        }
+        this.setState({
+            addedQuestionList: tempAddedQuestionListAll,
+            questionList: []
         })
     }
 
@@ -97,9 +109,9 @@ export default class CreateTest extends Component {
                         </tbody>
                     </table>
                     <table className='table' style={{ width: "65px", float:'left' }}>
-                        <thead className='thead-dark'>
+                        <thead className='thead-dark' style={{textAlign: 'center'}}>
                             <tr>
-                                <th>    &#8680;   </th>
+                                <button className='btn btn-dark' onClick={this.addAllQuestions}> &#8680; </button>
                             </tr>
                         </thead>
                     </table>
