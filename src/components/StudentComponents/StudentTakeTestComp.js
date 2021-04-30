@@ -12,6 +12,8 @@ export default class StudentTakeTest extends Component {
             score: 0,
             totalNrOfQuestions: 0,
             roomCode: "",
+            teacher: "",
+            questionListOfIds:[],
             joined: 0,
             questionListDone: [],
             givenAnswers: []
@@ -34,7 +36,8 @@ export default class StudentTakeTest extends Component {
                     totalNrOfQuestions: res.data.questionArrayDone.length + res.data.questionArrayRemaining.length,
                     roomCode: res.data.roomCode,
                     questionListDone: res.data.questionArrayDone,
-                    givenAnswers: res.data.givenAnswers
+                    givenAnswers: res.data.givenAnswers,
+                    teacher: res.data.teacher
                 })
             }
         })
@@ -76,21 +79,37 @@ export default class StudentTakeTest extends Component {
     async onJoinSubmit(event) {
         let isRoomCodeCorrect = true;
         event.preventDefault();
-        await axios.get('http://localhost:3001/question/implicitanswersofuser/' + this.state.roomCode).then(res => {
-            if (!res.data.length) {
+        await axios.get('http://localhost:3001/test/getbyroomcode/' + this.state.roomCode).then(res => {
+            console.log(res.data)
+            if (!res.data) {
                 alert("Invalid Room Code!");
                 window.location = '/student/'
                 isRoomCodeCorrect = false
             }
 
             this.setState({
-                questionList: res.data,
-                totalNrOfQuestions: res.data.length,
-                joined: 1
+                questionListOfIds: res.data.questionArray,
+                totalNrOfQuestions: res.data.questionArray.length,
+                teacher: res.data.teacher
             });
         }).catch(error => {
             console.log(error);
         })
+
+        if(isRoomCodeCorrect){
+            const questionIdsToSend = {
+                ids: this.state.questionListOfIds
+            }
+            await axios.post("http://localhost:3001/question/getbymanyids/",questionIdsToSend).then(res => {
+                if(res.data.length){
+                    console.log(res.data)
+                    this.setState({
+                        questionList: res.data,
+                        joined: 1
+                    })
+                }
+            })
+        }
 
         if (isRoomCodeCorrect) {
             const newTempLog = {
@@ -99,7 +118,8 @@ export default class StudentTakeTest extends Component {
                 questionArrayRemaining: this.state.questionList.map(question => question._id),
                 questionArrayDone: [],
                 answers: [],
-                score: 0
+                score: 0,
+                teacher: this.state.teacher
             }
 
             await axios.post('http://localhost:3001/templog/add', newTempLog).then(res => {
@@ -138,7 +158,7 @@ export default class StudentTakeTest extends Component {
                 "questionArray":this.state.questionListDone,
                 "givenAnswers":this.state.givenAnswers,
                 "score": this.state.score,
-                "teacher":"placeholder"
+                "teacher": this.state.teacher?this.state.teacher:"placeholder"
             }
 
             await axios.post('http://localhost:3001/testlog/add/', testLog).then(res => {
