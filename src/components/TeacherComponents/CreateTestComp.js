@@ -73,6 +73,10 @@ export default class CreateTest extends Component {
     }
 
     async sumbitTestCreation(){
+        if(!this.state.roomCode){
+            alert("Invalid roomCode");
+            return 0;
+        }
         const newTest = {
             roomCode: this.state.roomCode,
             questionArray: this.state.addedQuestionList.map(question => question._id),
@@ -95,7 +99,7 @@ export default class CreateTest extends Component {
                 <input className='form-control' placeholder='Room Code' type='text' minLength="4" value={this.state.roomCode} onChange={this.onChangeRoomCode} />
                 <br />
                 <h3>Your questions:</h3>
-                <div className='container' style={{ display: 'inline-block' }}>
+                <div className='container' style={{ display: 'inline-block', textAlign:'center' }}>
                     <table className='table' style={{ width: "420px", float:'left'}}>
                         <thead className='thead-dark'>
                             <tr>

@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Accordion from 'react-bootstrap/Accordion'
 import axios from 'axios';
 import { Card } from 'react-bootstrap';
-import {FaTrashAlt} from 'react-icons/fa';
+import { FaTrashAlt } from 'react-icons/fa';
 
 export default class TestList extends Component {
     constructor(props) {
@@ -39,15 +39,17 @@ export default class TestList extends Component {
                 let randomVal = Math.round(Math.random() * 1000);
                 return <Card>
                     <Accordion.Toggle as={Card.Header} variant="link" eventKey={randomVal}>
-                        RoomCode: {test.roomCode} | TimeStamp: {test.createdAt.replace("T", " ").replace("Z", " ")}
-                        <button className='btn btn-light' onClick={async () =>{
-                            await axios.delete("http://localhost:3001/test/"+test._id).then(res => {
-                                console.log(res.data);
-                                this.setState({
-                                    testArray: this.state.testArray.filter(testParam => testParam._id !== test._id)
+                        <h4>RoomCode: {test.roomCode} <br /> TimeStamp: {test.createdAt.replace("T", " ").replace("Z", " ")}</h4>
+                        <div style={{textAlign: 'right'}}>
+                            <button className='btn btn-light' onClick={async () => {
+                                await axios.delete("http://localhost:3001/test/" + test._id).then(res => {
+                                    console.log(res.data);
+                                    this.setState({
+                                        testArray: this.state.testArray.filter(testParam => testParam._id !== test._id)
+                                    })
                                 })
-                            })
-                        }}><FaTrashAlt /></button>
+                            }}><FaTrashAlt /></button>
+                        </div>
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey={randomVal}>
                         <Card.Body>
