@@ -74,7 +74,7 @@ export default class CreateTest extends Component {
 
     async sumbitTestCreation(){
         if(!this.state.roomCode){
-            alert("Invalid roomCode");
+            alert("Invalid Room Code");
             return 0;
         }
         const newTest = {
@@ -133,6 +133,7 @@ export default class CreateTest extends Component {
                     </table>
                 </div>
                 <button className="btn btn-dark btn-lg btn-block" onClick={this.sumbitTestCreation}>Create Test</button>
+                <br />
             </div>
         )
     }
