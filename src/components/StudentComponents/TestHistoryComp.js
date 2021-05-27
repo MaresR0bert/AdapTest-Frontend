@@ -32,11 +32,11 @@ export default class TestHistory extends Component {
         })
     }
 
-    populateAccordionWithTestLogs() {
-        if (!this.state.testLogArray.length) {
+    populateAccordionWithTestLogs(testLogArrayParam) {
+        if (!testLogArrayParam.length) {
             return <h3>You took no tests yet</h3>
         } else {
-            return this.state.testLogArray.map(testLog => {
+            return testLogArrayParam.map(testLog => {
                 let randomVal = Math.round(Math.random() * 1000);
                 return <Card>
                     <Accordion.Toggle as={Card.Header} eventKey={randomVal}>
@@ -72,7 +72,7 @@ export default class TestHistory extends Component {
             <div className='container'>
                 <h2>Test History</h2>
                 <Accordion>
-                    {this.populateAccordionWithTestLogs()}
+                    {this.populateAccordionWithTestLogs(this.state.testLogArray.reverse())}
                 </Accordion>
             </div>
         )

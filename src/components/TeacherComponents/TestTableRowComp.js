@@ -13,10 +13,10 @@ export default class TestTableRow extends Component {
         if (this.props.added) {
             return (
                 <tr>
-                    <td style={{ maxWidth: 400 }}>
+                    <td style={{ maxWidth: "320px" }}>
                         <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, 'html')} />
                     </td>
-                    <td>{this.props.question.difficulty}</td>
+                    <td><h2>{this.props.question.difficulty}</h2></td>
                     <td>
                         <button className='btn btn-light' onClick={()=>this.props.buttonFunction(this.props.question._id)}><AiFillCloseCircle /></button>
                     </td>
@@ -25,10 +25,10 @@ export default class TestTableRow extends Component {
         } else {
             return (
                 <tr>
-                    <td style={{ maxWidth: 400 }}>
+                    <td style={{ maxWidth: "320px" }}>
                         <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, 'html')} />
                     </td>
-                    <td>{this.props.question.difficulty}</td>
+                    <td><h2>{this.props.question.difficulty}</h2></td>
                     <td>
                         <button className='btn btn-light' onClick={()=>this.props.buttonFunction(this.props.question._id)}><FaArrowAltCircleRight /></button>
                     </td>
