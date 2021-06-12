@@ -9,7 +9,7 @@ export default class StudentTakeTest extends Component {
         super(props)
         this.state = {
             questionList: [],
-            score: 0,
+            score: [],
             totalNrOfQuestions: 0,
             roomCode: "",
             teacher: "",
@@ -22,6 +22,7 @@ export default class StudentTakeTest extends Component {
         this.updateScore = this.updateScore.bind(this);
         this.onChangeRoomCode = this.onChangeRoomCode.bind(this);
         this.onJoinSubmit = this.onJoinSubmit.bind(this);
+        this.getMean = this.getMean.bind(this);
     }
 
     async componentDidMount() {
@@ -62,6 +63,10 @@ export default class StudentTakeTest extends Component {
 
     getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    async getOptimalQuestion(scoreArray, lastQuestion, questionArrayRemainingParam){
+        
     }
 
     getQuestionBodyList() {
@@ -118,7 +123,7 @@ export default class StudentTakeTest extends Component {
                 questionArrayRemaining: this.state.questionList.map(question => question._id),
                 questionArrayDone: [],
                 answers: [],
-                score: 0,
+                score: [],
                 teacher: this.state.teacher
             }
 
@@ -128,15 +133,15 @@ export default class StudentTakeTest extends Component {
         }
     }
 
-    async updateScore(result, id, answerGiven) {
+    async updateScore(result, id, answerGiven, questionDifficulty) {
         this.setState({
-            score: this.state.score + (result === 'Correct' ? 1 : 0),
+            score: this.state.score.concat([questionDifficulty]), //this.state.score + (result === 'Correct' ? 1 : 0),
             questionList: this.state.questionList.filter(question => question._id !== id),
             questionListDone: this.state.questionListDone.concat([id]),
             givenAnswers: this.state.givenAnswers.concat([answerGiven])
         })
 
-        console.log("Current Score: " + this.state.score);
+        console.log(this.state.score);
 
         const updatedTempLog = {
             questionArrayRemaining: this.state.questionList.map(question => question._id),
@@ -175,6 +180,14 @@ export default class StudentTakeTest extends Component {
         }
     }
 
+    getMean(array){
+        let sum = 0;
+        for(let i of array){
+            sum += i;
+        }
+        return sum/array.length;
+    }
+
     render() {
         if (!this.state.joined) {
             return (
@@ -198,7 +211,7 @@ export default class StudentTakeTest extends Component {
                     <div className='container'>
                         <div className='jumbotron'>
                             <div className='jumbotron'>
-                                <h2 className='text-center'>You scored {this.state.score} out of {this.state.totalNrOfQuestions}, which is equivalent to {this.state.score / this.state.totalNrOfQuestions * 100}%</h2>
+                                <h2 className='text-center'>You scored {this.getMean(this.state.score) * 10}%</h2>
                             </div>
                             <div className='col text-center'>
                                 <button className="btn btn-dark" onClick={() => {

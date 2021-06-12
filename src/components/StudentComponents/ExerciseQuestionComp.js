@@ -49,7 +49,7 @@ export default class ExerciseQuestion extends Component {
         console.log(answerPackage);
         await axios.post('http://localhost:3001/question/check/' + this.props.question._id, answerPackage).then(res => {
             console.log(res.data);
-            this.props.updateScore(res.data, this.props.question._id, answerPackage.answer)
+            this.props.updateScore(res.data, this.props.question._id, answerPackage.answer, this.props.question.difficulty)
         })
     }
 

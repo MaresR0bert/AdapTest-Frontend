@@ -16,6 +16,7 @@ export default class TestHistory extends Component {
 
         this.populateAccordionCollapseWithValues = this.populateAccordionCollapseWithValues.bind(this);
         this.populateAccordionWithTestLogs = this.populateAccordionWithTestLogs.bind(this);
+        this.getMean = this.getMean.bind(this);
     }
 
     async componentDidMount() {
@@ -32,6 +33,14 @@ export default class TestHistory extends Component {
         })
     }
 
+    getMean(array){
+        let sum = 0;
+        for(let i of array){
+            sum += i;
+        }
+        return sum/array.length;
+    }
+
     populateAccordionWithTestLogs(testLogArrayParam) {
         if (!testLogArrayParam.length) {
             return <h3>You took no tests yet</h3>
@@ -43,7 +52,7 @@ export default class TestHistory extends Component {
                         <h6>
                             RoomCode: {testLog.roomCode}
                             <br />
-                        Score: {testLog.score} / {testLog.questionArray.length}
+                        Score: {this.getMean(testLog.score)*10}%
                             <br />
                         TimeStamp: {testLog.createdAt.replace("T", " ").replace("Z", " ")}
                             <br />
