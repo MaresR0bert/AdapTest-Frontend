@@ -135,7 +135,7 @@ export default class StudentTakeTest extends Component {
 
     async updateScore(result, id, answerGiven, questionDifficulty) {
         this.setState({
-            score: this.state.score.concat([questionDifficulty]), //this.state.score + (result === 'Correct' ? 1 : 0),
+            score: this.state.score.concat(result === 'Correct'?[questionDifficulty]:[]),
             questionList: this.state.questionList.filter(question => question._id !== id),
             questionListDone: this.state.questionListDone.concat([id]),
             givenAnswers: this.state.givenAnswers.concat([answerGiven])
