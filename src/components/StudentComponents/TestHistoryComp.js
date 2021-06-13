@@ -33,12 +33,12 @@ export default class TestHistory extends Component {
         })
     }
 
-    getMean(array){
+    getMean(array) {
         let sum = 0;
-        for(let i of array){
+        for (let i of array) {
             sum += i;
         }
-        return sum/array.length;
+        return sum / array.length;
     }
 
     populateAccordionWithTestLogs(testLogArrayParam) {
@@ -52,11 +52,11 @@ export default class TestHistory extends Component {
                         <h6>
                             RoomCode: {testLog.roomCode}
                             <br />
-                        Score: {this.getMean(testLog.score)*10}%
+                            Score: {this.getMean(testLog.score) * 10}%
                             <br />
-                        TimeStamp: {testLog.createdAt.replace("T", " ").replace("Z", " ")}
+                            TimeStamp: {testLog.createdAt.replace("T", " ").replace("Z", " ")}
                             <br />
-                        Teacher: {testLog.teacher}
+                            Teacher: {testLog.teacher}
                         </h6>
                     </Accordion.Toggle>
                     <Accordion.Collapse eventKey={randomVal}>
@@ -77,13 +77,22 @@ export default class TestHistory extends Component {
     }
 
     render() {
-        return (
-            <div className='container'>
-                <h2>Test History</h2>
-                <Accordion>
-                    {this.populateAccordionWithTestLogs(this.state.testLogArray.reverse())}
-                </Accordion>
-            </div>
-        )
+        if (this.state.testLogArray) {
+            return (
+                <div className='container'>
+                    <h2>Test History</h2>
+                    <Accordion>
+                        {this.populateAccordionWithTestLogs(this.state.testLogArray.reverse())}
+                    </Accordion>
+                </div>
+            )
+        } else {
+            return(
+                <div className='container'>
+                    <h2>Test History</h2>
+                    <h4>You took no tests yet</h4>
+                </div>
+            )
+        }
     }
 }

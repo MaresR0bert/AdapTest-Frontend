@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ExerciseQuestion from './ExerciseQuestionComp.js';
 import {IoArrowBack} from 'react-icons/io5';
-import ProgressBar from 'react-bootstrap/ProgressBar';
 
 export default class StudentTakeTest extends Component {
     constructor(props) {
@@ -16,7 +15,8 @@ export default class StudentTakeTest extends Component {
             questionListOfIds:[],
             joined: 0,
             questionListDone: [],
-            givenAnswers: []
+            givenAnswers: [],
+            isAscending: true
         };
 
         this.updateScore = this.updateScore.bind(this);
@@ -38,7 +38,8 @@ export default class StudentTakeTest extends Component {
                     roomCode: res.data.roomCode,
                     questionListDone: res.data.questionArrayDone,
                     givenAnswers: res.data.givenAnswers,
-                    teacher: res.data.teacher
+                    teacher: res.data.teacher,
+                    isAscending: res.data.ascending
                 })
             }
         })
@@ -65,8 +66,13 @@ export default class StudentTakeTest extends Component {
         return Math.floor(Math.random() * Math.floor(max));
     }
 
-    async getOptimalQuestion(scoreArray, lastQuestion, questionArrayRemainingParam){
-        
+    async getOptimalQuestion(scoreArray, lastQuestion, questionArrayRemainingParam, isAscendingParam){
+        let optimalQuestionID;
+        await axios.post("").then(res =>{
+            optimalQuestionID = res.data;
+        })
+
+        return this.state.questionList.filter(question => question._id === optimalQuestionID);
     }
 
     getQuestionBodyList() {
@@ -124,7 +130,8 @@ export default class StudentTakeTest extends Component {
                 questionArrayDone: [],
                 answers: [],
                 score: [],
-                teacher: this.state.teacher
+                teacher: this.state.teacher,
+                ascending: this.state.isAscending
             }
 
             await axios.post('http://localhost:3001/templog/add', newTempLog).then(res => {
@@ -138,7 +145,8 @@ export default class StudentTakeTest extends Component {
             score: this.state.score.concat(result === 'Correct'?[questionDifficulty]:[]),
             questionList: this.state.questionList.filter(question => question._id !== id),
             questionListDone: this.state.questionListDone.concat([id]),
-            givenAnswers: this.state.givenAnswers.concat([answerGiven])
+            givenAnswers: this.state.givenAnswers.concat([answerGiven]),
+            isAscending: result === 'Correct'? true : false
         })
 
         console.log(this.state.score);
@@ -147,7 +155,8 @@ export default class StudentTakeTest extends Component {
             questionArrayRemaining: this.state.questionList.map(question => question._id),
             questionArrayDone: this.state.questionListDone,
             givenAnswers: this.state.givenAnswers,
-            score: this.state.score
+            score: this.state.score,
+            ascending: this.state.isAscending
         }
 
         if (this.state.questionList.length) {
