@@ -68,6 +68,12 @@ export default class StudentTakeTest extends Component {
 
     async getOptimalQuestion(scoreArray, lastQuestion, questionArrayRemainingParam, isAscendingParam){
         let optimalQuestionID;
+        let packageToSend={
+            scoreArray: scoreArray,
+            lastQuestion: lastQuestion,
+            questionArrayRemaining: questionArrayRemainingParam.map(question => question._id),
+            isAscending: isAscendingParam
+        }
         await axios.post("").then(res =>{
             optimalQuestionID = res.data;
         })
