@@ -16,7 +16,8 @@ export default class StudentTakeTest extends Component {
             joined: 0,
             questionListDone: [],
             givenAnswers: [],
-            isAscending: true
+            isAscending: true,
+            currQuesID: null
         };
 
         this.updateScore = this.updateScore.bind(this);
@@ -44,7 +45,6 @@ export default class StudentTakeTest extends Component {
             }
         })
 
-
         if (this.state.questionList.length) {
             alert('You were reconnected to your test')
             const questionIdsToSend = {
@@ -60,6 +60,7 @@ export default class StudentTakeTest extends Component {
                 }
             })
         }
+
     }
 
     getRandomInt(max) {
@@ -74,11 +75,21 @@ export default class StudentTakeTest extends Component {
             questionArrayRemaining: questionArrayRemainingParam.map(question => question._id),
             isAscending: isAscendingParam
         }
-        await axios.post("").then(res =>{
+        await axios.post("http://localhost:3001/question/getoptimal/",packageToSend).then(res =>{
             optimalQuestionID = res.data;
         })
 
-        return this.state.questionList.filter(question => question._id === optimalQuestionID);
+        if(!optimalQuestionID){
+            this.setState({
+                joined: 2
+            })
+        } else {
+            console.log("Optimal achieved!");
+            console.log(this.state.questionList.filter(question => question._id === optimalQuestionID));
+            this.setState({
+                currQuesID: optimalQuestionID
+            })
+        }
     }
 
     getQuestionBodyList() {
@@ -238,6 +249,17 @@ export default class StudentTakeTest extends Component {
                 )
             }
             let currentQuestion = this.state.questionList[this.getRandomInt(this.state.questionList.length)];
+            //let lastQuestion;
+            // if(!this.state.questionListDone.length){
+            //     lastQuestion = false;
+            //     console.log("no did it")
+            // } else {
+            //     lastQuestion = this.state.questionListDone[this.state.questionListDone.length - 1];
+            //     console.log("did it")
+            // }
+            //let currentQuestion = this.getOptimalQuestion(this.state.score, lastQuestion, this.state.questionList, this.state.isAscending);
+            //console.log(currentQuestion)
+            //let currentQuestion = this.state.currQuesID;
             if (currentQuestion && this.state.joined === 1) {
                 return (
                     <div className="container">

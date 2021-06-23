@@ -18,6 +18,8 @@ export default class ExerciseQuestion extends Component {
     }
 
     populateAnswers() {
+        console.log("Sa vedem");
+        console.log(this.props.question)
         return this.props.question.answers.map(answerElem => {
             return <div><label><input type='radio' name='answers' className='form-check-input' value={answerElem} />{answerElem}</label><br /></div>
         })

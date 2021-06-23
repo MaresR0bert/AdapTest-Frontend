@@ -16,7 +16,7 @@ export default class AddQuestionComp extends Component {
             questionBody: RichTextEditor.createEmptyValue(),
             rightAnswers: [],
             wrongAnswers: [],
-            difficulty: 0,
+            difficulty: 1,
             username: ''
         }
     }
@@ -71,7 +71,7 @@ export default class AddQuestionComp extends Component {
             questionBody: RichTextEditor.createEmptyValue(),
             rightAnswers: [],
             wrongAnswers: [],
-            difficulty: 0,
+            difficulty: 1,
         })
     }
 
