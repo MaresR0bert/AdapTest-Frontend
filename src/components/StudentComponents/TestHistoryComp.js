@@ -34,11 +34,7 @@ export default class TestHistory extends Component {
     }
 
     getMean(array) {
-        let sum = 0;
-        for (let i of array) {
-            sum += i;
-        }
-        return sum / array.length;
+        return (array[array.length -1] + array[array.length -2] + array[array.length -3])/3
     }
 
     populateAccordionWithTestLogs(testLogArrayParam) {

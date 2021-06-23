@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ExerciseQuestion from './ExerciseQuestionComp.js';
-import {IoArrowBack} from 'react-icons/io5';
+import { IoArrowBack } from 'react-icons/io5';
 
 export default class StudentTakeTest extends Component {
     constructor(props) {
@@ -12,7 +12,7 @@ export default class StudentTakeTest extends Component {
             totalNrOfQuestions: 0,
             roomCode: "",
             teacher: "",
-            questionListOfIds:[],
+            questionListOfIds: [],
             joined: 0,
             questionListDone: [],
             givenAnswers: [],
@@ -54,7 +54,22 @@ export default class StudentTakeTest extends Component {
             await axios.post("http://localhost:3001/question/getbymanyids/", questionIdsToSend).then(result => {
                 if (result.data.length) {
                     this.setState({
-                        questionList: result.data,
+                        questionList: result.data
+                    })
+                }
+            })
+
+            const optimalPackage = {
+                scoreArray: this.state.score,
+                lastQuestion: this.state.questionListDone.length ? this.state.questionListDone[this.state.questionListDone.length - 1]:false,
+                questionArrayRemaining: this.state.questionList.map(question => question._id),
+                isAscending: this.state.isAscending
+            }
+
+            await axios.post("http://localhost:3001/question/getoptimal/", optimalPackage).then(res => {
+                if(res.data){
+                    this.setState({
+                        currQuesID:res.data,
                         joined: 1
                     })
                 }
@@ -67,25 +82,23 @@ export default class StudentTakeTest extends Component {
         return Math.floor(Math.random() * Math.floor(max));
     }
 
-    async getOptimalQuestion(scoreArray, lastQuestion, questionArrayRemainingParam, isAscendingParam){
+    async getOptimalQuestion(scoreArray, lastQuestion, questionArrayRemainingParam, isAscendingParam) {
         let optimalQuestionID;
-        let packageToSend={
+        let packageToSend = {
             scoreArray: scoreArray,
             lastQuestion: lastQuestion,
             questionArrayRemaining: questionArrayRemainingParam.map(question => question._id),
             isAscending: isAscendingParam
         }
-        await axios.post("http://localhost:3001/question/getoptimal/",packageToSend).then(res =>{
+        await axios.post("http://localhost:3001/question/getoptimal/", packageToSend).then(res => {
             optimalQuestionID = res.data;
         })
 
-        if(!optimalQuestionID){
+        if (!optimalQuestionID) {
             this.setState({
                 joined: 2
             })
         } else {
-            console.log("Optimal achieved!");
-            console.log(this.state.questionList.filter(question => question._id === optimalQuestionID));
             this.setState({
                 currQuesID: optimalQuestionID
             })
@@ -124,16 +137,36 @@ export default class StudentTakeTest extends Component {
             console.log(error);
         })
 
-        if(isRoomCodeCorrect){
+        if (isRoomCodeCorrect) {
             const questionIdsToSend = {
                 ids: this.state.questionListOfIds
             }
-            await axios.post("http://localhost:3001/question/getbymanyids/",questionIdsToSend).then(res => {
-                if(res.data.length){
+            await axios.post("http://localhost:3001/question/getbymanyids/", questionIdsToSend).then(res => {
+                if (res.data.length) {
                     console.log(res.data)
                     this.setState({
                         questionList: res.data,
+                    })
+                }
+            })
+        }
+
+        if (isRoomCodeCorrect) {
+            const optimalPackage = {
+                scoreArray: [],
+                lastQuestion: false,
+                questionArrayRemaining: this.state.questionList.map(question => question._id),
+                isAscending: false
+            }
+            await axios.post("http://localhost:3001/question/getoptimal/", optimalPackage).then(res => {
+                if (res.data) {
+                    this.setState({
+                        currQuesID: res.data,
                         joined: 1
+                    })
+                } else {
+                    this.setState({
+                        joined: 2
                     })
                 }
             })
@@ -158,12 +191,34 @@ export default class StudentTakeTest extends Component {
     }
 
     async updateScore(result, id, answerGiven, questionDifficulty) {
-        this.setState({
-            score: this.state.score.concat(result === 'Correct'?[questionDifficulty]:[]),
-            questionList: this.state.questionList.filter(question => question._id !== id),
-            questionListDone: this.state.questionListDone.concat([id]),
-            givenAnswers: this.state.givenAnswers.concat([answerGiven]),
-            isAscending: result === 'Correct'? true : false
+
+        let newQuestionList = this.state.questionList.filter(question => question._id !== id);
+        let itIsDone = false;
+
+        const optimalPackage = {
+            scoreArray: this.state.score.concat([questionDifficulty]),
+            lastQuestion: id,
+            questionArrayRemaining: newQuestionList.map(question => question._id),
+            isAscending: result === 'Correct' ? true : false
+        }
+
+        await axios.post("http://localhost:3001/question/getoptimal/", optimalPackage).then(res => {
+            if (res.data) {
+                this.setState({
+                    score: this.state.score.concat([questionDifficulty]),
+                    questionList: this.state.questionList.filter(question => question._id !== id),
+                    questionListDone: this.state.questionListDone.concat([id]),
+                    givenAnswers: this.state.givenAnswers.concat([answerGiven]),
+                    isAscending: result === 'Correct' ? true : false,
+                    currQuesID: res.data
+                })
+            } else {
+                this.setState({
+                    score: this.state.score.concat([questionDifficulty]),
+                    joined: 2
+                })
+                itIsDone = true;
+            }
         })
 
         console.log(this.state.score);
@@ -176,7 +231,7 @@ export default class StudentTakeTest extends Component {
             ascending: this.state.isAscending
         }
 
-        if (this.state.questionList.length) {
+        if (!itIsDone) {
             await axios.put('http://localhost:3001/templog/updatebyname/' + this.props.username, updatedTempLog).then(res => {
                 console.log(res.data);
             })
@@ -184,12 +239,12 @@ export default class StudentTakeTest extends Component {
             console.log("nothing more called");
 
             const testLog = {
-                "student":this.props.username,
-                "roomCode":this.state.roomCode,
-                "questionArray":this.state.questionListDone,
-                "givenAnswers":this.state.givenAnswers,
+                "student": this.props.username,
+                "roomCode": this.state.roomCode,
+                "questionArray": this.state.questionListDone,
+                "givenAnswers": this.state.givenAnswers,
                 "score": this.state.score,
-                "teacher": this.state.teacher?this.state.teacher:"placeholder"
+                "teacher": this.state.teacher ? this.state.teacher : "placeholder"
             }
 
             await axios.post('http://localhost:3001/testlog/add/', testLog).then(res => {
@@ -199,19 +254,15 @@ export default class StudentTakeTest extends Component {
             this.setState({
                 joined: 2
             })
-            
+
             await axios.delete('http://localhost:3001/templog/deletebyname/' + this.props.username).then(res => {
                 console.log(res.data);
             })
         }
     }
 
-    getMean(array){
-        let sum = 0;
-        for(let i of array){
-            sum += i;
-        }
-        return sum/array.length;
+    getMean(array) {
+        return (array[array.length - 1] + array[array.length - 2] + array[array.length - 3]) / 3
     }
 
     render() {
@@ -248,18 +299,7 @@ export default class StudentTakeTest extends Component {
                     </div>
                 )
             }
-            let currentQuestion = this.state.questionList[this.getRandomInt(this.state.questionList.length)];
-            //let lastQuestion;
-            // if(!this.state.questionListDone.length){
-            //     lastQuestion = false;
-            //     console.log("no did it")
-            // } else {
-            //     lastQuestion = this.state.questionListDone[this.state.questionListDone.length - 1];
-            //     console.log("did it")
-            // }
-            //let currentQuestion = this.getOptimalQuestion(this.state.score, lastQuestion, this.state.questionList, this.state.isAscending);
-            //console.log(currentQuestion)
-            //let currentQuestion = this.state.currQuesID;
+            let currentQuestion = this.state.questionList.filter(q => q._id === this.state.currQuesID)[0];
             if (currentQuestion && this.state.joined === 1) {
                 return (
                     <div className="container">
