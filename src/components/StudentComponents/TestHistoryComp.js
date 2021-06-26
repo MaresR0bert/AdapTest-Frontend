@@ -11,7 +11,8 @@ export default class TestHistory extends Component {
         super(props)
 
         this.state = {
-            testLogArray: []
+            testLogArray: [],
+            notAllowedTests: []
         }
 
         this.populateAccordionCollapseWithValues = this.populateAccordionCollapseWithValues.bind(this);
@@ -20,9 +21,15 @@ export default class TestHistory extends Component {
     }
 
     async componentDidMount() {
+        let testLogArrayDummy = [];
         await axios.get("http://localhost:3001/testlog/getbyname/" + this.props.username).then(res => {
+            testLogArrayDummy = res.data
+        })
+
+        await axios.get("http://localhost:3001/test/getallroomcodes/").then(res => {
             this.setState({
-                testLogArray: res.data
+                testLogArray: testLogArrayDummy,
+                notAllowedTests: res.data
             })
         })
     }
@@ -34,7 +41,7 @@ export default class TestHistory extends Component {
     }
 
     getMean(array) {
-        return (array[array.length -1] + array[array.length -2] + array[array.length -3])/3
+        return (array[array.length - 1] + array[array.length - 2] + array[array.length - 3]) / 3
     }
 
     populateAccordionWithTestLogs(testLogArrayParam) {
@@ -43,31 +50,54 @@ export default class TestHistory extends Component {
         } else {
             return testLogArrayParam.map(testLog => {
                 let randomVal = Math.round(Math.random() * 1000);
-                return <Card>
-                    <Accordion.Toggle as={Card.Header} eventKey={randomVal}>
-                        <h6>
-                            RoomCode: {testLog.roomCode}
-                            <br />
-                            Score: {this.getMean(testLog.score) * 10}%
-                            <br />
-                            TimeStamp: {testLog.createdAt.replace("T", " ").replace("Z", " ")}
-                            <br />
-                            Teacher: {testLog.teacher}
-                        </h6>
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey={randomVal}>
-                        <Card.Body>
-                            <h5>Questions</h5>
-                            {this.populateAccordionCollapseWithValues(testLog.questionArray)}
-                        </Card.Body>
-                    </Accordion.Collapse>
-                    <Accordion.Collapse eventKey={randomVal}>
-                        <Card.Body>
-                            <h5>Your answers</h5>
-                            {this.populateAccordionCollapseWithValues(testLog.givenAnswers)}
-                        </Card.Body>
-                    </Accordion.Collapse>
-                </Card>
+                if (this.state.notAllowedTests.includes(testLog.roomCode)) {
+                    return <Card>
+                        <Accordion.Toggle as={Card.Header} eventKey={randomVal}>
+                            <h6>
+                                RoomCode: {testLog.roomCode}
+                                <br />
+                                Score: {this.getMean(testLog.score) * 10}%
+                                <br />
+                                TimeStamp: {testLog.createdAt.replace("T", " ").replace("Z", " ")}
+                                <br />
+                                Teacher: {testLog.teacher}
+                            </h6>
+                        </Accordion.Toggle>
+                        <Accordion.Collapse eventKey={randomVal}>
+                            <Card.Body>
+                                <h5>
+                                    Inspection Not Allowed
+                                </h5>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                } else {
+                    return <Card>
+                        <Accordion.Toggle as={Card.Header} eventKey={randomVal}>
+                            <h6>
+                                RoomCode: {testLog.roomCode}
+                                <br />
+                                Score: {this.getMean(testLog.score) * 10}%
+                                <br />
+                                TimeStamp: {testLog.createdAt.replace("T", " ").replace("Z", " ")}
+                                <br />
+                                Teacher: {testLog.teacher}
+                            </h6>
+                        </Accordion.Toggle>
+                        <Accordion.Collapse eventKey={randomVal}>
+                            <Card.Body>
+                                <h5>Questions</h5>
+                                {this.populateAccordionCollapseWithValues(testLog.questionArray)}
+                            </Card.Body>
+                        </Accordion.Collapse>
+                        <Accordion.Collapse eventKey={randomVal}>
+                            <Card.Body>
+                                <h5>Your answers</h5>
+                                {this.populateAccordionCollapseWithValues(testLog.givenAnswers)}
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                }
             })
         }
     }
@@ -83,7 +113,7 @@ export default class TestHistory extends Component {
                 </div>
             )
         } else {
-            return(
+            return (
                 <div className='container'>
                     <h2>Test History</h2>
                     <h4>You took no tests yet</h4>
