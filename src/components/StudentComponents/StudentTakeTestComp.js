@@ -215,6 +215,8 @@ export default class StudentTakeTest extends Component {
             } else {
                 this.setState({
                     score: this.state.score.concat([questionDifficulty]),
+                    questionListDone: this.state.questionListDone.concat([id]),
+                    givenAnswers: this.state.givenAnswers.concat([answerGiven]),
                     joined: 2
                 })
                 itIsDone = true;
