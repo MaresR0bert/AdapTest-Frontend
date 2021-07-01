@@ -21,6 +21,8 @@ export default class QuestionRow extends Component {
             <tr>
                 <td style={{maxWidth:400}}>
                     <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody,'html')} />
+                    <br />
+                    <h6>Category: {this.props.question.questionCategory}</h6>
                 </td>
                 <td>
                     <ul>

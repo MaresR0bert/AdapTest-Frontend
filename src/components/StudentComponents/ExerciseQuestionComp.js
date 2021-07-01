@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import RichTextEditor from 'react-rte';
 import RenderAsImage from 'react-render-as-image'
+import SyntaxHighlighter from 'react-syntax-highlighter';
 
 export default class ExerciseQuestion extends Component {
     constructor(props) {
@@ -85,9 +86,15 @@ export default class ExerciseQuestion extends Component {
             return (
                 <form onSubmit={this.onSubmit}>
                     <div className="container">
+                        <h6>Category: {this.props.question.questionCategory}</h6>
                         <div style={{ border: "2px solid black" }}>
                             <RenderAsImage>
                                 <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
+                            </RenderAsImage>
+                            <RenderAsImage>
+                                <SyntaxHighlighter language={this.props.question.questionProgLang ? this.props.question.questionProgLang:"c"}>
+                                    {this.props.question.questionCode?this.props.question.questionCode:""}
+                                </SyntaxHighlighter>
                             </RenderAsImage>
                         </div>
                         <div onChange={this.onChangeValue} className='jumbotron'>
@@ -103,9 +110,15 @@ export default class ExerciseQuestion extends Component {
             return (
                 <form onSubmit={this.onSubmit}>
                     <div className="container">
+                        <h6>Category: {this.props.question.questionCategory}</h6>
                         <div style={{ border: "2px solid black" }}>
                             <RenderAsImage>
                                 <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
+                            </RenderAsImage>
+                            <RenderAsImage>
+                                <SyntaxHighlighter language={this.props.question.questionProgLang ? this.props.question.questionProgLang:"c"}>
+                                    {this.props.question.questionCode?this.props.question.questionCode:""}
+                                </SyntaxHighlighter>
                             </RenderAsImage>
                         </div>
                         <div onChange={this.onChangeMultipleAnswers} className='jumbotron'>
