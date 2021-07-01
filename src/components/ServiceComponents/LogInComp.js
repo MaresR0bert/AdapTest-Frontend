@@ -51,7 +51,7 @@ export default class LogIn extends Component {
 
         return (
             <div className='container'>
-                <h1 className='text-center'>Welcome to Adaptest!</h1>
+                <h1 className='text-center'>Welcome to aTestive!</h1>
                 <h1 className='text-center'>The free adaptive testing platform</h1>
                 <br />
                 <h2>Log in <IoEnterOutline /></h2>
