@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import RichTextEditor from 'react-rte';
 import RenderAsImage from 'react-render-as-image'
 import SyntaxHighlighter from 'react-syntax-highlighter';
+import {stackoverflowLight} from 'react-syntax-highlighter/dist/esm/styles/hljs'
 
 export default class ExerciseQuestion extends Component {
     constructor(props) {
@@ -92,7 +93,7 @@ export default class ExerciseQuestion extends Component {
                                 <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
                             </RenderAsImage>
                             <RenderAsImage>
-                                <SyntaxHighlighter language={this.props.question.questionProgLang ? this.props.question.questionProgLang:"c"}>
+                                <SyntaxHighlighter language={this.props.question.questionProgLang ? this.props.question.questionProgLang:"c"} style={stackoverflowLight}>
                                     {this.props.question.questionCode?this.props.question.questionCode:""}
                                 </SyntaxHighlighter>
                             </RenderAsImage>
@@ -116,7 +117,7 @@ export default class ExerciseQuestion extends Component {
                                 <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
                             </RenderAsImage>
                             <RenderAsImage>
-                                <SyntaxHighlighter language={this.props.question.questionProgLang ? this.props.question.questionProgLang:"c"}>
+                                <SyntaxHighlighter language={this.props.question.questionProgLang ? this.props.question.questionProgLang:"c"} style={stackoverflowLight}>
                                     {this.props.question.questionCode?this.props.question.questionCode:""}
                                 </SyntaxHighlighter>
                             </RenderAsImage>
