@@ -4,13 +4,13 @@ import {FaArtstation, FaListAlt, FaUserTie} from 'react-icons/fa';
 import {IoMdAddCircle} from 'react-icons/io';
 import {AiOutlineDisconnect} from 'react-icons/ai';
 import {CgFileAdd} from 'react-icons/cg';
-import {HiClipboardList} from 'react-icons/hi'
+import {HiClipboardList} from 'react-icons/hi';
 
 export default class NavbarTeacher extends Component {
     render() {
         return (
             <div>
-                <nav className='navbar navbar-expand-md navbar-dark bg-dark' /*style={{backgroundColor: "#3fc1c9"}}*/>
+                <nav className='navbar fixed-top navbar-expand-md navbar-dark bg-dark' /*style={{backgroundColor: "#3fc1c9"}}*/>
                     <Link to='/teacher' className='navbar-brand'><FaArtstation /> aTestive</Link>
                     <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                         <ul className='navbar-nav mr-auto'>
@@ -42,6 +42,9 @@ export default class NavbarTeacher extends Component {
                         </ul>
                     </div>
                 </nav>
+                <br />
+                <br />
+                <br />
             </div>
         )
     }

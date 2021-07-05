@@ -130,11 +130,14 @@ export default class EditQuestionComp extends Component {
                         <br />
                         <h6>Programming Language:</h6>
                         <select required className='form-control' value={this.state.questionProgLang} onChange={this.onChangeProgLang} title='Programming Language'>
-                            <option value='none'>Choose Programming Language</option>
-                            <option value='c'>C/C++</option>
+                            <option value=''>Choose Programming Language</option>
+                            <option value='c'>C</option>
+                            <option value='cpp'>C++</option>
+                            <option value='sql'>SQL</option>
+                            <option value='csharp'>C#</option>
+                            <option value='python'>Python</option>
                             <option value='java'>Java</option>
                             <option value='javascript'>JavaScript</option>
-                            <option value='python'>Python</option>
                         </select>
                         <br />
                         <h6>Right answer: </h6>
@@ -149,7 +152,7 @@ export default class EditQuestionComp extends Component {
                         <br />
                         <h6>Category: </h6>
                         <select required className='form-control' value={this.state.questionCategory} onChange={this.onChangeCategory} title='Question Category'>
-                            <option value='none'>Choose Programming Language</option>
+                            <option value=''>Choose Category</option>
                             <option value='oop'>OOP</option>
                             <option value='ds'>Data Structures</option>
                             <option value='java'>Java</option>
