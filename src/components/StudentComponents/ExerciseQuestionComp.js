@@ -82,6 +82,14 @@ export default class ExerciseQuestion extends Component {
         }
     }
 
+    populateCode(codeString, progLang){
+        if(codeString && progLang){
+            return <SyntaxHighlighter language={progLang ? progLang : 'c'} style ={stackoverflowLight}>
+                {codeString}
+            </SyntaxHighlighter>
+        }
+    }
+
     render() {
         if (!this.props.question.isMultiAnswer) {
             return (
@@ -91,11 +99,7 @@ export default class ExerciseQuestion extends Component {
                         <div style={{ border: "2px solid black" }}>
                             <RenderAsImage>
                                 <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
-                            </RenderAsImage>
-                            <RenderAsImage>
-                                <SyntaxHighlighter language={this.props.question.questionProgLang ? this.props.question.questionProgLang:"c"} style={stackoverflowLight}>
-                                    {this.props.question.questionCode?this.props.question.questionCode:""}
-                                </SyntaxHighlighter>
+                                {this.populateCode(this.props.question.questionCode, this.props.question.questionProgLang)}
                             </RenderAsImage>
                         </div>
                         <div onChange={this.onChangeValue} className='jumbotron'>
@@ -115,11 +119,7 @@ export default class ExerciseQuestion extends Component {
                         <div style={{ border: "2px solid black" }}>
                             <RenderAsImage>
                                 <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody, "html")} />
-                            </RenderAsImage>
-                            <RenderAsImage>
-                                <SyntaxHighlighter language={this.props.question.questionProgLang ? this.props.question.questionProgLang:"c"} style={stackoverflowLight}>
-                                    {this.props.question.questionCode?this.props.question.questionCode:""}
-                                </SyntaxHighlighter>
+                                {this.populateCode(this.props.question.questionCode, this.props.question.questionProgLang)}
                             </RenderAsImage>
                         </div>
                         <div onChange={this.onChangeMultipleAnswers} className='jumbotron'>
