@@ -23,7 +23,8 @@ export default class AddQuestionComp extends Component {
             username: '',
             questionCode:'',
             questionProgLang:'',
-            questionCategory:''
+            questionCategory:'',
+            categoryList: ['No Category Available']
         }
     }
 
@@ -66,8 +67,37 @@ export default class AddQuestionComp extends Component {
     }
 
     onChangeProgLang(event){
+        let tempCatList;
+        switch(event.target.value){
+            case "c":
+                tempCatList = ['Syntax', 'Pointers', 'Arrays', 'Lists', 'Hashmaps', 'BST', 'AVL Trees', 'Graphs', 'Files', 'Memory', 'Datatypes'];
+                break;
+            case "cpp":
+                tempCatList = ['Syntax', 'Pointers', 'Arrays', 'Constructors', 'Fields', 'Access Modifires', 'Operator Overloading', 'Files', 'Inheritence', 'STL', 'Memory', 'Datatypes', 'Pillars', 'Classes'];
+                break;
+            case 'sql':
+                tempCatList = ['Syntax', 'DDL', 'DML', 'DQL', 'DCL', 'Loops', 'Cursors', 'Procs', 'Triggers'];
+                break;
+            case 'csharp':
+                tempCatList = ['Syntax', 'Delegates', 'Events', 'Display Controls', 'Context Menus', 'Buttons', 'Database', 'User-Defind Controls', 'Graphics', 'OOP', 'Pillars', 'Operator Overloading', 'Inheritence'];
+                break;
+            case 'python':
+                tempCatList = ['Syntax', 'Mutators', 'Algorithm loop', 'Objective-fucntion', 'Pandas Dataframes', 'Numpy', 'Canonic-Analasys', 'Lists', 'Dictionaries', 'Functions', 'Pyplot'];
+                break;
+            case 'java':
+                tempCatList = ['Syntax', 'OOP', 'Pillars', 'Classes', 'Objects', 'Memory', 'Datatypes', 'Files', 'Threads', 'Database', 'TCP/IP Connections', 'UDP Connections', 'Sockets', 'SQL-Database', 'Non-SQL Database', 'JSON', 'XML',
+            'Controls', 'Android Theory', 'Clean Code', 'Variable Naming', 'SOLID', 'Other Clean Code Principles', 'Design Patterns - Creational', 'Design Patterns - Structural', 'Design Patterns - Behavioral',
+            'DP - Identfication', 'Unit Testing', 'Test Suites', 'Right BICEP', 'CORRECT'];
+                break;
+            case 'javascript':
+                tempCatList = ['Syntax', 'Classes', 'Objects', 'Restful API', 'React', 'Axios', 'Entities', 'Validations']
+                break;
+            default:
+                tempCatList = ['No Categories available'];
+        }
         this.setState({
-            questionProgLang: event.target.value
+            questionProgLang: event.target.value,
+            categoryList: tempCatList
         })
     }
 
@@ -139,10 +169,9 @@ export default class AddQuestionComp extends Component {
                     <h6>Category:</h6>
                     <select required className='form-control' value={this.state.questionCategory} onChange={this.onChangeCategory} title='Question Category'>
                         <option value=''>Choose Category</option>
-                        <option value='oop'>OOP</option>
-                        <option value='ds'>Data Structures</option>
-                        <option value='java'>Java</option>
-                        <option value='sqt'>Software Quality and Testing</option>
+                        {this.state.categoryList.map(cat => {
+                            return <option value= {cat}>{cat}</option>
+                        })}
                     </select>
                     <br />
                     <input className="btn btn-dark" type='submit' />

@@ -23,6 +23,7 @@ export default class QuestionRow extends Component {
                     <RichTextEditor readOnly value={RichTextEditor.createValueFromString(this.props.question.questionBody,'html')} />
                     <br />
                     <h6>Category: {this.props.question.questionCategory}</h6>
+                    <h6>Programming Language: {this.props.question.questionProgLang}</h6>
                 </td>
                 <td>
                     <ul>

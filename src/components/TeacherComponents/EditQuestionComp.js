@@ -15,6 +15,7 @@ export default class EditQuestionComp extends Component {
         this.onChangeCode = this.onChangeCode.bind(this);
         this.onChangeProgLang = this.onChangeProgLang.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
+        this.populateCatList = this.populateCatList.bind(this);
 
         this.state = {
             questionBody: RichTextEditor.createEmptyValue(),
@@ -25,7 +26,8 @@ export default class EditQuestionComp extends Component {
             done: false,
             questionCode: '',
             questionProgLang: '',
-            questionCategory: ''
+            questionCategory: '',
+            categoryList: ['No Categories Available']
         }
     }
 
@@ -39,11 +41,44 @@ export default class EditQuestionComp extends Component {
                 username: response.data.username,
                 questionCode: response.data.questionCode,
                 questionProgLang: response.data.questionProgLang,
-                questionCategory: response.data.questionCategory
+                questionCategory: response.data.questionCategory,
+                categoryList: this.populateCatList(response.data.questionProgLang)
             })
         }).catch(error => {
             console.log(error)
         })
+    }
+
+    populateCatList(progLang){
+        let tempCatList;
+        switch(progLang){
+            case "c":
+                tempCatList = ['Syntax', 'Pointers', 'Arrays', 'Lists', 'Hashmaps', 'BST', 'AVL Trees', 'Graphs', 'Files', 'Memory', 'Datatypes'];
+                break;
+            case "cpp":
+                tempCatList = ['Syntax', 'Pointers', 'Arrays', 'Constructors', 'Fields', 'Access Modifires', 'Operator Overloading', 'Files', 'Inheritence', 'STL', 'Memory', 'Datatypes', 'Pillars', 'Classes'];
+                break;
+            case 'sql':
+                tempCatList = ['Syntax', 'DDL', 'DML', 'DQL', 'DCL', 'Loops', 'Cursors', 'Procs', 'Triggers'];
+                break;
+            case 'csharp':
+                tempCatList = ['Syntax', 'Delegates', 'Events', 'Display Controls', 'Context Menus', 'Buttons', 'Database', 'User-Defind Controls', 'Graphics', 'OOP', 'Pillars', 'Operator Overloading', 'Inheritence'];
+                break;
+            case 'python':
+                tempCatList = ['Syntax', 'Mutators', 'Algorithm loop', 'Objective-fucntion', 'Pandas Dataframes', 'Numpy', 'Canonic-Analasys', 'Lists', 'Dictionaries', 'Functions', 'Pyplot'];
+                break;
+            case 'java':
+                tempCatList = ['Syntax', 'OOP', 'Pillars', 'Classes', 'Objects', 'Memory', 'Datatypes', 'Files', 'Threads', 'Database', 'TCP/IP Connections', 'UDP Connections', 'Sockets', 'SQL-Database', 'Non-SQL Database', 'JSON', 'XML',
+            'Controls', 'Android Theory', 'Clean Code', 'Variable Naming', 'SOLID', 'Other Clean Code Principles', 'Design Patterns - Creational', 'Design Patterns - Structural', 'Design Patterns - Behavioral',
+            'DP - Identfication', 'Unit Testing', 'Test Suites', 'Right BICEP', 'CORRECT'];
+                break;
+            case 'javascript':
+                tempCatList = ['Syntax', 'Classes', 'Objects', 'Restful API', 'React', 'Axios', 'Entities', 'Validations']
+                break;
+            default:
+                tempCatList = ['No Categories available'];
+        }
+        return tempCatList;
     }
 
     onChangeBody(event) {
@@ -79,8 +114,10 @@ export default class EditQuestionComp extends Component {
     }
 
     onChangeProgLang(event) {
+        
         this.setState({
-            questionProgLang: event.target.value
+            questionProgLang: event.target.value,
+            categoryList: this.populateCatList(event.target.value)
         })
     }
 
@@ -153,10 +190,9 @@ export default class EditQuestionComp extends Component {
                         <h6>Category: </h6>
                         <select required className='form-control' value={this.state.questionCategory} onChange={this.onChangeCategory} title='Question Category'>
                             <option value=''>Choose Category</option>
-                            <option value='oop'>OOP</option>
-                            <option value='ds'>Data Structures</option>
-                            <option value='java'>Java</option>
-                            <option value='sqt'>Software Quality and Testing</option>
+                            {this.state.categoryList.map(cat => {
+                                return <option value={cat}>{cat}</option>
+                            })}
                         </select>
                         <br />
                         <input className="btn btn-dark" type='submit' />
