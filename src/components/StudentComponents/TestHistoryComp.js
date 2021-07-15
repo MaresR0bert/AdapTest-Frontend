@@ -34,9 +34,13 @@ export default class TestHistory extends Component {
         })
     }
 
-    populateAccordionCollapseWithValues(array) {
-        return array.map(questionElem => {
-            return <div>{questionElem}</div>
+    populateAccordionCollapseWithValues(array, array2) {
+        let tempArray = [];
+        for(let i = 0; i < array.length; i++){
+            tempArray.push([array[i], array2[i]]);
+        }
+        return tempArray.map(questionElem => {
+            return <div>{questionElem[0]} : {questionElem[1]}</div>
         })
     }
 
@@ -49,7 +53,7 @@ export default class TestHistory extends Component {
             return <h3>You took no tests yet</h3>
         } else {
             return testLogArrayParam.map(testLog => {
-                let randomVal = Math.round(Math.random() * 1000);
+                let randomVal = Math.round(Math.random() * 10000);
                 if (this.state.notAllowedTests.includes(testLog.roomCode)) {
                     return <Card>
                         <Accordion.Toggle as={Card.Header} eventKey={randomVal}>
@@ -86,14 +90,8 @@ export default class TestHistory extends Component {
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={randomVal}>
                             <Card.Body>
-                                <h5>Questions</h5>
-                                {this.populateAccordionCollapseWithValues(testLog.questionArray)}
-                            </Card.Body>
-                        </Accordion.Collapse>
-                        <Accordion.Collapse eventKey={randomVal}>
-                            <Card.Body>
-                                <h5>Your answers</h5>
-                                {this.populateAccordionCollapseWithValues(testLog.givenAnswers)}
+                                <h5>Questions : Your answers</h5>
+                                {this.populateAccordionCollapseWithValues(testLog.questionArray, testLog.givenAnswers)}
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
